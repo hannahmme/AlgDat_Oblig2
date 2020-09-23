@@ -2,6 +2,9 @@ import java.util.*;
 
 class DobbeltLenketListeTest {
 
+    //TODO: Det er mye rødt her siden vi ikke har begynt på
+    //todo: oppgavene i DobbeltLenketListe-klassen
+
     ////// Oppgave 1 /////////////////////
     @org.junit.jupiter.api.Test
     void oppgave1() {
