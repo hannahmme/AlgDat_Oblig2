@@ -82,7 +82,7 @@ public class DobbeltLenketListe<T> implements Liste<T> {
 
 
 
-    // Oppgave 3a
+// Oppgave 3a Amalie
     // denne metoden skal returnere noden med den gitte indeksen/posisjonen
     /*private Node<T> finnNode(int indeks){
 
@@ -99,10 +99,12 @@ public class DobbeltLenketListe<T> implements Liste<T> {
     }
 
 
-    // Oppgave 3b
+// Oppgave 3b Amalie
     public Liste<T> subliste(int fra, int til){
         throw new UnsupportedOperationException();
     }
+
+
 
 
     // Oppgave 4
@@ -123,7 +125,7 @@ public class DobbeltLenketListe<T> implements Liste<T> {
     }
 
 
-// Oppgave 6
+// Oppgave 6 Amalie
     @Override
     public boolean fjern(T verdi) {
         throw new UnsupportedOperationException();
@@ -136,20 +138,20 @@ public class DobbeltLenketListe<T> implements Liste<T> {
     }
 
 
-    // Oppgave 7
+// Oppgave 7
     @Override
     public void nullstill() {
         throw new UnsupportedOperationException();
     }
 
 
-    //8b: skal returnere en instans av iteratorklassen
+//8b: skal returnere en instans av iteratorklassen
     @Override
     public Iterator<T> iterator() {
         throw new UnsupportedOperationException();
     }
 
-    // 8d: sjekk om indeksen er lovlig. se så oppgavetekst
+// 8d: sjekk om indeksen er lovlig. se så oppgavetekst
     public Iterator<T> iterator(int indeks) {
         throw new UnsupportedOperationException();
     }
@@ -167,7 +169,13 @@ public class DobbeltLenketListe<T> implements Liste<T> {
             iteratorendringer = endringer;  // teller endringer
         }
 
-        // 8c: sette pekeren denne til noden som hører til den oppgitte indeksen
+
+// 8a: se oppgavetekst
+        @Override
+        public T next(){
+            throw new UnsupportedOperationException();
+        }
+// 8c: sette pekeren denne til noden som hører til den oppgitte indeksen
         private DobbeltLenketListeIterator(int indeks){
             throw new UnsupportedOperationException();
         }
@@ -178,14 +186,10 @@ public class DobbeltLenketListe<T> implements Liste<T> {
             return denne != null;
         }
 
-    // 8a: se oppgavetekst
-        @Override
-        public T next(){
-            throw new UnsupportedOperationException();
-        }
 
 
-        // Oppgave 9
+
+// Oppgave 9 Amalie
         @Override
         public void remove(){
             throw new UnsupportedOperationException();
@@ -195,7 +199,7 @@ public class DobbeltLenketListe<T> implements Liste<T> {
 
 
 
-    // Oppgave 10: ikke bruk hjelpestrukturer
+// Oppgave 10: ikke bruk hjelpestrukturer
     public static <T> void sorter(Liste<T> liste, Comparator<? super T> c) {
         throw new UnsupportedOperationException();
     }
