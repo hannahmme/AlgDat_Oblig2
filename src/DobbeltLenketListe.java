@@ -1,6 +1,5 @@
-import java.util.Comparator;
-import java.util.Iterator;
-import java.util.NoSuchElementException;
+import java.awt.datatransfer.StringSelection;
+import java.util.*;
 
 //hentet fra tilleggsklasser som fulgte med oppgaven 
 
@@ -39,27 +38,26 @@ public class DobbeltLenketListe<T> implements Liste<T> {
     }
 
 
-
-
-
-// Oppgave 1
+    // Oppgave 1
     // metoden skal returnere antall verdier
     @Override
     public int antall() {
-        throw new UnsupportedOperationException();
+        return this.antall;
     }
 
     // metoden skal returnere true/ false om den er tom eller ikke
     @Override
     public boolean tom() {
-        throw new UnsupportedOperationException();
+        return true;
     }
 
     // metoden skal lage en dobbeltlenket liste med verdiene fra tabell a
     public DobbeltLenketListe(T[] a) {
-        throw new UnsupportedOperationException();
+        DobbeltLenketListe<T> liste = new DobbeltLenketListe<>();
+        for(T verdi : a) {
+            liste.leggInn(verdi);
+        }
     }
-
 
     // Oppgave 2a
     @Override
