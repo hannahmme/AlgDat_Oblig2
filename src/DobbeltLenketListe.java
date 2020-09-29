@@ -1,9 +1,11 @@
 import java.util.Comparator;
 import java.util.Iterator;
+import java.util.NoSuchElementException;
 
 //hentet fra tilleggsklasser som fulgte med oppgaven 
 
 public class DobbeltLenketListe<T> implements Liste<T> {
+    T[] a = (T[]) new Object[]{};
 
     /**
      * Node class
@@ -30,8 +32,10 @@ public class DobbeltLenketListe<T> implements Liste<T> {
     private int antall;            // antall noder i listen
     private int endringer;         // antall endringer i listen
 
-    public DobbeltLenketListe() {
-        throw new UnsupportedOperationException();
+    public DobbeltLenketListe(){
+        hode = hale = null;
+        antall = 0;
+        endringer = 0;
     }
 
 
@@ -82,26 +86,78 @@ public class DobbeltLenketListe<T> implements Liste<T> {
 
 
 
-// Oppgave 3a Amalie
-    // denne metoden skal returnere noden med den gitte indeksen/posisjonen
-    /*private Node<T> finnNode(int indeks){
+// Oppgave 3a Amalie TODO: Tror denne skal være OK
+    private Node<T> finnNode(int indeks){
+        int halvpart = antall/2;
+        Node<T> nodePaIndeks = null;
 
-    }*/
+        Node<T> node;
+
+        // mindre enn halvpart, let fra hode og gå til høyre med .next
+        if(indeks<halvpart){
+            node = hode;
+            for(int i = 0; i == indeks; i++){
+                nodePaIndeks = node.neste;
+            }
+        }
+
+        // større: let fra hale og gå til venstre med .prev
+        else{
+            node = hale;
+            for(int i = antall-1; i == indeks; i--){
+                nodePaIndeks = node.forrige;
+            }
+        }
+
+        return nodePaIndeks;
+    }
+
+
+    // skal hente og returnere verdien på en node sin indeks
+    @Override
+    public T hent(int indeks) {
+        indeksKontroll(indeks, false); // false betyr at indeksen ikke kan være lik antallet
+        return finnNode(indeks).verdi;
+    }
 
     @Override
     public T oppdater(int indeks, T nyverdi) {
-        throw new UnsupportedOperationException();
+        indeksKontroll(indeks, false); // Kaster et unntak om indeksen ikke allerede ligger i listen
+
+        Node<T> enNode = finnNode(indeks);
+        T oldValue = enNode.verdi;
+        enNode.verdi = nyverdi;
+
+        endringer++;
+        return oldValue;
     }
 
-    @Override
-    public T hent(int indeks) {
-        throw new UnsupportedOperationException();
+    // hentet fra kompendiet, delkapittel 1.2.3
+    private static void fratilKontroll(int antall, int fra, int til) {
+        if (fra < 0)                                  // fra er negativ
+            throw new IndexOutOfBoundsException("fra(" + fra + ") er negativ!");
+
+        if (til > antall)                          // til er utenfor tabellen
+            throw new IndexOutOfBoundsException("til(" + til + ") > tablengde(" + antall + ")");
+
+        if (fra > til)                                // fra er større enn til
+            throw new IllegalArgumentException("fra(" + fra + ") > til(" + til + ") - illegalt intervall!");
     }
 
 
-// Oppgave 3b Amalie
-    public Liste<T> subliste(int fra, int til){
-        throw new UnsupportedOperationException();
+// Oppgave 3b: skal returnere en liste som inneholder verdiene i intervallet
+    public Liste<T> subliste(int fra, int til){ //fra=hode og til=hale
+        fratilKontroll(antall, fra, til); //evt antall-1?
+
+        Liste<T> subliste = null;
+
+        for(int i = 0; i < antall; i++){
+            T leggInn = hent(fra);
+            subliste.leggInn(i, leggInn);
+            fra++;
+        }
+
+        return subliste;
     }
 
 
@@ -128,13 +184,38 @@ public class DobbeltLenketListe<T> implements Liste<T> {
 // Oppgave 6 Amalie
     @Override
     public boolean fjern(T verdi) {
-        throw new UnsupportedOperationException();
+        if(verdi == null){throw new NoSuchElementException("nullverdi");}
+
+        for(int i = 0; i<antall; i++){
+            if(finnNode(i).verdi == verdi){
+                finnNode(i).verdi = null;
+                return true;
+            }
+
+        }
+
+        return false;
     }
 
-
+// TODO: test denne
     @Override
     public T fjern(int indeks) {
-        throw new UnsupportedOperationException();
+        indeksKontroll(indeks, false);
+
+        T utVerdi = hent(indeks);
+
+        // finner noden som skal fjernes
+        Node<T> skalFjernes = finnNode(indeks);
+
+        // tilegner forrige node sin neste den som skal fjernes sin neste
+        Node<T> nesteNode = skalFjernes.neste;
+        Node<T> forrigeNode = skalFjernes.forrige;
+        skalFjernes.neste = null;
+
+        forrigeNode.neste = nesteNode;
+        nesteNode.forrige = forrigeNode;
+
+        return utVerdi;
     }
 
 
