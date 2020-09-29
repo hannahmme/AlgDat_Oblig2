@@ -48,7 +48,10 @@ public class DobbeltLenketListe<T> implements Liste<T> {
     // metoden skal returnere true/ false om den er tom eller ikke
     @Override
     public boolean tom() {
-        return true;
+        if(antall == 0){
+            return true;
+        }
+        return false; 
     }
 
     // metoden skal lage en dobbeltlenket liste med verdiene fra tabell a
