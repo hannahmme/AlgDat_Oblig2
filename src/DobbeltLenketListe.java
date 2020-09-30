@@ -107,12 +107,6 @@ public class DobbeltLenketListe<T> implements Liste<T> {
 
 
 
-
-
-
-
-
-
 // Oppgave 3a Amalie TODO: Tror denne skal være OK
     private Node<T> finnNode(int indeks){
         int halvpart = antall/2;
@@ -191,9 +185,22 @@ public class DobbeltLenketListe<T> implements Liste<T> {
 
 
     // Oppgave 4
+    //Metoden bruker en hjelpevariabel current som settes lik hode-noden,
+    //dette for at startpunktet er fra venstre.
+    //Deretter sjekker vi om current sin verdi tilsvarer verdien vi søker etter
+    //Gjør den det, returnerer vi "i".
+    //Hvis ikke øker vi plassen vi står på til neste node
+    //med current = current.next
     @Override
     public int indeksTil(T verdi) {
-        return 0;
+        Node current = hode;
+        for(int i = 0; i < antall; i++){
+            if(current.verdi == verdi){
+                return i;
+            }
+            current = current.neste;
+        }
+        return -1;
     }
 
     @Override
