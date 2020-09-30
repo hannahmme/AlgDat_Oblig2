@@ -55,6 +55,9 @@ public class DobbeltLenketListe<T> implements Liste<T> {
     }
 
     // metoden skal lage en dobbeltlenket liste med verdiene fra tabell a
+    //den sjekker med metoden fra Objects-klassen requireNonNull at tabellen ikke er null
+    //Metoden har en teller kalt current. Den starter ved hodet og flytter seg ett hakk frem for hver
+    //ny node.
     public DobbeltLenketListe(T[] a) {
         Objects.requireNonNull(a, "Tabellen a er null!");
         DobbeltLenketListe<T> liste = new DobbeltLenketListe<>();
@@ -63,7 +66,7 @@ public class DobbeltLenketListe<T> implements Liste<T> {
         for(T verdi : a) {
             //tar ikke med null-verdier
             if (verdi != null) {
-                liste.antall++;
+                antall++;
                 Node nyNode = new Node(verdi);
 
                 //setter inn verdi i hode-noden.
