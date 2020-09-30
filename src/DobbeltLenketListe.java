@@ -193,7 +193,7 @@ public class DobbeltLenketListe<T> implements Liste<T> {
     // Oppgave 4
     @Override
     public int indeksTil(T verdi) {
-        throw new UnsupportedOperationException();
+        return 0;
     }
 
     @Override
