@@ -51,15 +51,38 @@ public class DobbeltLenketListe<T> implements Liste<T> {
         if(antall == 0){
             return true;
         }
-        return false; 
+        return false;
     }
 
     // metoden skal lage en dobbeltlenket liste med verdiene fra tabell a
     public DobbeltLenketListe(T[] a) {
+        Objects.requireNonNull(a, "Tabellen a er null!");
         DobbeltLenketListe<T> liste = new DobbeltLenketListe<>();
+        Node current = liste.hode;
+
         for(T verdi : a) {
-            liste.leggInn(verdi);
+            //tar ikke med null-verdier
+            if (verdi != null) {
+                liste.antall++;
+                Node nyNode = new Node(verdi);
+
+                //setter inn verdi i hode-noden.
+                if (liste.hode == null) {
+                    liste.hode = nyNode;
+                    liste.hode.forrige = null;
+                    liste.hode.neste = null;
+                }else{
+                    //setter inn neste node i rekken
+                    current.neste = nyNode;
+                    nyNode.forrige = current;
+                    nyNode.neste = null;
+                }
+                //oppdater neste, flytte current 1 fram
+                current = nyNode;
+            }
         }
+        //setter hale-p
+        liste.hale = current;
     }
 
     // Oppgave 2a
