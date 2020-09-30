@@ -91,18 +91,21 @@ public class DobbeltLenketListe<T> implements Liste<T> {
     // Oppgave 2a
     @Override
     public String toString() {
-        throw new UnsupportedOperationException();
+        //throw new UnsupportedOperationException();
+        return null;
     }
 
     public String omvendtString() {
-        throw new UnsupportedOperationException();
+        //throw new UnsupportedOperationException();
+        return null;
     }
 
 
 // Oppgave 2b
     @Override
     public boolean leggInn(T verdi) {
-        throw new UnsupportedOperationException();
+        //throw new UnsupportedOperationException();
+        return false;
     }
 
 
@@ -194,10 +197,26 @@ public class DobbeltLenketListe<T> implements Liste<T> {
     @Override
     public int indeksTil(T verdi) {
         Node current = hode;
-        for(int i = 0; i < antall; i++){
-            if(current.verdi == verdi){
-                return i;
+        for(int i = 0; i < antall-1; i++){
+            if(current != null){
+                if(current.verdi.equals(verdi)){
+                    return i;
+                }
             }
+            current = current.neste;
+        }
+        return -1;
+    }
+
+    //bare for å teste
+    public int indeksTilWhile(T verdi) {
+        Node current = hode;
+        int indeks = 0;
+        while(current != hale) {
+            if (current.verdi.equals(verdi)) {
+                return indeks;
+            }
+            indeks++;
             current = current.neste;
         }
         return -1;
@@ -205,7 +224,10 @@ public class DobbeltLenketListe<T> implements Liste<T> {
 
     @Override
     public boolean inneholder(T verdi) {
-        throw new UnsupportedOperationException();
+        if(indeksTil(verdi) != 1){
+            return true;
+        }
+        return false;
     }
 
     //Oppgave 5
