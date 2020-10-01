@@ -56,11 +56,13 @@ public class DobbeltLenketListe<T> implements Liste<T> {
 
     /**
      * Konstruktør som oppretter en dobbelt lenket liste med noder.
+     * Bruker Objects sin .requireNonNull() for å sjekke om tabellen er null.
      * Current brukes som en teller, som starter på plass hode
      * og flytter seg en plass til høyre for hver ny node.
      * Antall økes hver gang en node legges til.
      * Hvis hode er null, legges det til verdi og forrige og neste-peker er lik null.
      * Deretter legges nodene til etter det, og forrige og neste-peker oppdateres.
+     *
      * @param a - generisk liste
      */
 
@@ -73,6 +75,7 @@ public class DobbeltLenketListe<T> implements Liste<T> {
             if(verdi != null){
                 Node<T> nyNode = new Node<T>(verdi);
                 antall++;
+                endringer++;
                 if (hode == null) {
                     //setter inn verdi i hode-noden.
                     nyNode.forrige = null;
