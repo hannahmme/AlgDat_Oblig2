@@ -367,7 +367,6 @@ public class DobbeltLenketListe<T> implements Liste<T> {
 // Oppgave 7
     @Override
     public void nullstill() {
-        throw new UnsupportedOperationException();
     }
 
 
