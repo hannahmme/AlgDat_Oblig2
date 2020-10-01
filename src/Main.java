@@ -20,6 +20,14 @@ public class Main {
         //System.out.println(liste.inneholder(3));
         //System.out.println("While-metoden :" + liste.indeksTilWhile(2));
 
+        //Oppgave 2a
+        /*String[] s1 = {};*/
+        String[] s2 = {"A"};
+        String[] s3 = {null, "A", null, "B", null};
+        /*DobbeltLenketListe<String> l1 = new DobbeltLenketListe<>(s1);*/
+        DobbeltLenketListe<String> l2 = new DobbeltLenketListe<>(s2);
+        DobbeltLenketListe<String> l3 = new DobbeltLenketListe<>(s3);
 
+        System.out.print(/*l1.toString() + " " + */l2.toString() + " " + l3.toString());
     }
 }
