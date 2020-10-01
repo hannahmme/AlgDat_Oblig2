@@ -244,44 +244,44 @@ public class DobbeltLenketListe<T> implements Liste<T> {
 
 
 
-    // Oppgave 4
-    //Metoden bruker en hjelpevariabel current som settes lik hode-noden,
-    //dette for at startpunktet er fra venstre.
-    //Deretter sjekker vi om current sin verdi tilsvarer verdien vi søker etter
-    //Gjør den det, returnerer vi "i".
-    //Hvis ikke øker vi plassen vi står på til neste node
-    //med current = current.next
+    // Oppgave 4 - Hannah
+
+    /**
+     * Metoden sjekker om verdi ligger i listen.
+     * Current brukes som teller, hvor den starter på hode-noden
+     * og øker med current.neste for hver iterasjon.
+     * Antall er alle verdiene som ligger i listen.
+     *
+     * @param verdi - generisk verdi som skal finnes indeks av
+     * @return - returnerer indeks til verdien om den ligger i listen,
+     *           ellers -1 om verdi er null eller ikke finnes.
+     */
+
     @Override
     public int indeksTil(T verdi) {
-        Node current = hode;
-        for(int i = 0; i < antall-1; i++){
+        Node<T> current = this.hode;
+        for(int i = 0; i < antall; i++){
             if(current != null){
                 if(current.verdi.equals(verdi)){
                     return i;
                 }
+                current = current.neste;
             }
-            current = current.neste;
         }
         return -1;
     }
 
-    //bare for å teste
-    public int indeksTilWhile(T verdi) {
-        Node current = hode;
-        int indeks = 0;
-        while(current != hale) {
-            if (current.verdi.equals(verdi)) {
-                return indeks;
-            }
-            indeks++;
-            current = current.neste;
-        }
-        return -1;
-    }
 
+    /**
+     * Metoden sjekker om en verdi finnes i listen.
+     * Benytter metoden indeksTil().
+     *
+     * @param verdi - verdien det letes etter
+     * @return - true hvis verdien finnes i listen, ellers false
+     */
     @Override
     public boolean inneholder(T verdi) {
-        if(indeksTil(verdi) != 1){
+        if(indeksTil(verdi) != -1){
             return true;
         }
         return false;
