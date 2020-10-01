@@ -1,10 +1,8 @@
-import java.awt.datatransfer.StringSelection;
 import java.util.*;
 
 //hentet fra tilleggsklasser som fulgte med oppgaven 
 
 public class DobbeltLenketListe<T> implements Liste<T> {
-    T[] a = (T[]) new Object[]{};
 
     /**
      * Node class
@@ -32,13 +30,14 @@ public class DobbeltLenketListe<T> implements Liste<T> {
     private int endringer;         // antall endringer i listen
 
     public DobbeltLenketListe(){
-        hode = hale = null;
+        hode = null;
+        hale = null;
         antall = 0;
         endringer = 0;
     }
 
 
-    // Oppgave 1
+    // Oppgave 1 - Hannah
     // metoden skal returnere antall verdier
     @Override
     public int antall() {
@@ -54,38 +53,43 @@ public class DobbeltLenketListe<T> implements Liste<T> {
         return false;
     }
 
-    // metoden skal lage en dobbeltlenket liste med verdiene fra tabell a
-    //den sjekker med metoden fra Objects-klassen requireNonNull at tabellen ikke er null
-    //Metoden har en teller kalt current. Den starter ved hodet og flytter seg ett hakk frem for hver
-    //ny node.
+
+    /**
+     * Konstruktør som oppretter en dobbelt lenket liste med noder.
+     * Current brukes som en teller, som starter på plass hode
+     * og flytter seg en plass til høyre for hver ny node.
+     * Antall økes hver gang en node legges til.
+     * Hvis hode er null, legges det til verdi og forrige og neste-peker er lik null.
+     * Deretter legges nodene til etter det, og forrige og neste-peker oppdateres.
+     * @param a - generisk liste
+     */
+
     public DobbeltLenketListe(T[] a) {
         Objects.requireNonNull(a, "Tabellen a er null!");
-        DobbeltLenketListe<T> liste = new DobbeltLenketListe<>();
-        Node current = liste.hode;
+        Node<T> current = hode;
 
         for(T verdi : a) {
             //tar ikke med null-verdier
-            if (verdi != null) {
+            if(verdi != null){
+                Node<T> nyNode = new Node<T>(verdi);
                 antall++;
-                Node nyNode = new Node(verdi);
-
-                //setter inn verdi i hode-noden.
-                if (liste.hode == null) {
-                    liste.hode = nyNode;
-                    liste.hode.forrige = null;
-                    liste.hode.neste = null;
-                }else{
+                if (hode == null) {
+                    //setter inn verdi i hode-noden.
+                    nyNode.forrige = null;
+                    nyNode.neste = null;
+                    hode = nyNode;
+                } else {
                     //setter inn neste node i rekken
-                    current.neste = nyNode;
                     nyNode.forrige = current;
                     nyNode.neste = null;
+                    current.neste = nyNode;
                 }
                 //oppdater neste, flytte current 1 fram
                 current = nyNode;
             }
         }
         //setter hale-p
-        liste.hale = current;
+        hale = current;
     }
 
     // Oppgave 2a
