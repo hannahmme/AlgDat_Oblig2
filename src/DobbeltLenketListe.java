@@ -91,8 +91,25 @@ public class DobbeltLenketListe<T> implements Liste<T> {
     // Oppgave 2a
     @Override
     public String toString() {
-        //throw new UnsupportedOperationException();
-        return null;
+        if (antall == 0){ //Hvis den dobbeltlenkede listen er tom returneres en streng med kun klammer (tom liste)
+            return "[]";
+        }
+
+        StringBuilder listeString = new StringBuilder();
+        Node node = hode; //Bruker en hjelpenode som "holder" på gjeldende node, starter med listen sitt hode
+        listeString.append('['); //Strengen startes med en start-klamme
+        listeString.append(node.verdi); //Verdien i første node (hode) legges til strengen
+        node = node.neste; //Hjelpenoden blir satt til noden etter hodet
+
+        while(node != null){ //while-løkke som legger til noden sin verdi så lenge noden ikke er null (verdien kan være null), hjelpenoden blir satt til neste node
+            listeString.append(',');
+            listeString.append(node.verdi);
+            node = node.neste;
+        }
+
+        listeString.append(']'); //Strengen avsluttes med en slutt-klamme
+
+        return listeString.toString(); //bruker StringBuilder sin toString()-metode for å gjøre om listeString til en tekststreng
     }
 
     public String omvendtString() {
