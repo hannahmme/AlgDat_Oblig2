@@ -300,19 +300,17 @@ public class DobbeltLenketListe<T> implements Liste<T> {
                 if (finnNode(i).verdi == verdi) {
 
                     if(antall == 1){
-                        hode = null;
+                        hode.verdi = null;
+                        hode = hode.neste;
                         hale = null;
                     }
 
                     if(finnNode(i).neste == hale){ // hvis neste er hale
-                        hale.forrige = finnNode(i).forrige;
+                        hale.forrige = finnNode(i-1);
                     }
                     if(finnNode(i).forrige == hode){ // hvis forrige er hode
-                        hode.neste = finnNode(i).neste;
+                        hode.neste = finnNode(i+1);
                     }
-
-                    finnNode(i).neste = null; // fjerner peker til neste
-                    finnNode(i).forrige = null; // fjerner peker til forrige
 
                     finnNode(i-1).neste = finnNode(i+1);
                     finnNode(i+1).forrige = finnNode(i-1).neste;
@@ -334,15 +332,26 @@ public class DobbeltLenketListe<T> implements Liste<T> {
         T utVerdi = hent(indeks);
 
         // finner noden som skal fjernes
-        Node<T> skalFjernes = finnNode(indeks);
+        Node<T> denne = finnNode(indeks);
 
         // tilegner forrige node sin neste den som skal fjernes sin neste
-        Node<T> nesteNode = skalFjernes.neste;
-        Node<T> forrigeNode = skalFjernes.forrige;
-        skalFjernes.neste = null;
+        if(antall == 1){
+            hode.verdi = null;
+            hode = hode.neste;
+            hale = null;
+        }
 
-        forrigeNode.neste = nesteNode;
-        nesteNode.forrige = forrigeNode;
+        if(denne.neste == hale){ // hvis neste er hale
+            hale.forrige = finnNode(indeks-1);
+        }
+
+        if(denne.forrige == hode){ // hvis forrige er hode
+            hode.neste = finnNode(indeks+1);
+        }
+
+        finnNode(indeks-1).neste = finnNode(indeks+1);
+        finnNode(indeks+1).forrige = finnNode(indeks-1).neste;
+
 
         return utVerdi;
     }
@@ -411,6 +420,8 @@ public class DobbeltLenketListe<T> implements Liste<T> {
             }
 
             fjernOK = false;
+
+            //blir det definert en verdi p?
 
             
 
