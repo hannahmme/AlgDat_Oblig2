@@ -113,8 +113,8 @@ public class DobbeltLenketListe<T> implements Liste<T> {
 // Oppgave 3a Amalie TODO: Tror denne skal være OK
     private Node<T> finnNode(int indeks){
         int halvpart = antall/2;
-        Node<T> nodePaIndeks = null;
 
+        Node<T> nodePaIndeks = null;
         Node<T> node;
 
         // mindre enn halvpart, let fra hode og gå til høyre med .next
@@ -137,13 +137,14 @@ public class DobbeltLenketListe<T> implements Liste<T> {
     }
 
 
-    // skal hente og returnere verdien på en node sin indeks
+    // TODO: OK. skal hente og returnere verdien på en node sin indeks
     @Override
     public T hent(int indeks) {
         indeksKontroll(indeks, false); // false betyr at indeksen ikke kan være lik antallet
         return finnNode(indeks).verdi;
     }
 
+    // TODO: OK?
     @Override
     public T oppdater(int indeks, T nyverdi) {
         indeksKontroll(indeks, false); // Kaster et unntak om indeksen ikke allerede ligger i listen
@@ -156,7 +157,7 @@ public class DobbeltLenketListe<T> implements Liste<T> {
         return oldValue;
     }
 
-    // hentet fra kompendiet, delkapittel 1.2.3
+    // TODO: OK. hentet fra kompendiet, delkapittel 1.2.3
     private static void fratilKontroll(int antall, int fra, int til) {
         if (fra < 0)                                  // fra er negativ
             throw new IndexOutOfBoundsException("fra(" + fra + ") er negativ!");
@@ -171,14 +172,20 @@ public class DobbeltLenketListe<T> implements Liste<T> {
 
 // Oppgave 3b: skal returnere en liste som inneholder verdiene i intervallet
     public Liste<T> subliste(int fra, int til){ //fra=hode og til=hale
-        fratilKontroll(antall, fra, til); //evt antall-1?
+        fratilKontroll(antall, fra, til);
+        int antall = til - fra;
 
-        Liste<T> subliste = null;
+        DobbeltLenketListe<T> subliste = null;
 
         for(int i = 0; i < antall; i++){
             T leggInn = hent(fra);
             subliste.leggInn(i, leggInn);
             fra++;
+        }
+
+        if(subliste.tom()){
+            Node<T> hodeSubliste = subliste.finnNode(fra);
+            Node<T> haleSubliste = subliste.finnNode(antall);
         }
 
         return subliste;
@@ -242,14 +249,34 @@ public class DobbeltLenketListe<T> implements Liste<T> {
     public boolean fjern(T verdi) {
         if(verdi == null){throw new NoSuchElementException("nullverdi");}
 
-        for(int i = 0; i<antall; i++){
-            if(finnNode(i).verdi == verdi){
-                finnNode(i).verdi = null;
-                return true;
+        if(antall>0) {
+            for (int i = 0; i < antall; i++) {
+                if (finnNode(i).verdi == verdi) {
+
+                    if(antall == 1){
+                        hode = null;
+                        hale = null;
+                    }
+
+                    if(finnNode(i).neste == hale){ // hvis neste er hale
+                        hale.forrige = finnNode(i).forrige;
+                    }
+                    if(finnNode(i).forrige == hode){ // hvis forrige er hode
+                        hode.neste = finnNode(i).neste;
+                    }
+
+                    finnNode(i).neste = null; // fjerner peker til neste
+                    finnNode(i).forrige = null; // fjerner peker til forrige
+
+                    finnNode(i-1).neste = finnNode(i+1);
+                    finnNode(i+1).forrige = finnNode(i-1).neste;
+
+                    endringer++;
+                    antall--;
+                    return true;
+                }
             }
-
         }
-
         return false;
     }
 
@@ -312,8 +339,9 @@ public class DobbeltLenketListe<T> implements Liste<T> {
         public T next(){
             throw new UnsupportedOperationException();
         }
-// 8c: sette pekeren denne til noden som hører til den oppgitte indeksen
-        private DobbeltLenketListeIterator(int indeks){
+
+        // 8c: sette pekeren denne til noden som hører til den oppgitte indeksen
+    private DobbeltLenketListeIterator(int indeks){
             throw new UnsupportedOperationException();
         }
 
@@ -329,6 +357,18 @@ public class DobbeltLenketListe<T> implements Liste<T> {
 // Oppgave 9 Amalie
         @Override
         public void remove(){
+
+            // noe som skal kastes her, se oppg
+
+            if(endringer!=iteratorendringer){
+                throw new ConcurrentModificationException("feil i oppg 9");
+            }
+
+            fjernOK = false;
+
+            
+
+
             throw new UnsupportedOperationException();
         }
 
