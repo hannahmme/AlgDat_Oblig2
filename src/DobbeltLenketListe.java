@@ -167,56 +167,66 @@ public class DobbeltLenketListe<T> implements Liste<T> {
     private Node<T> finnNode(int indeks){
         int halvpart = antall/2;
 
-        Node<T> nodePaIndeks = null;
         Node<T> node;
 
+        if(indeks==0){
+            node = hode;
+        }
+
         // mindre enn halvpart, let fra hode og gå til høyre med .next
-        if(indeks<halvpart){
+        else if(indeks<halvpart){
             node = hode;
             for(int i = 0; i == indeks; i++){
-                nodePaIndeks = node.neste;
+                node = node.neste;
             }
         }
 
         // større: let fra hale og gå til venstre med .prev
         else{
             node = hale;
-            for(int i = antall-1; i == indeks; i--){
-                nodePaIndeks = node.forrige;
+            for(int i = antall; i == indeks; i--){
+                node = node.forrige;
             }
         }
 
-        return nodePaIndeks;
+        return node;
     }
 
 
-    // TODO: OK. skal hente og returnere verdien på en node sin indeks
+    // TODO: Skal hente og returnere verdien på en node, men har noen problemer med indeksen??? tror at den har indeks 99999 uansett
     @Override
     public T hent(int indeks) {
         indeksKontroll(indeks, false); // false betyr at indeksen ikke kan være lik antallet
+
         return finnNode(indeks).verdi;
     }
 
-    // TODO: OK?
+    // metode som oppdaterer eksisterende verdi og skriver ut gammel verdi
     @Override
     public T oppdater(int indeks, T nyverdi) {
         indeksKontroll(indeks, false); // Kaster et unntak om indeksen ikke allerede ligger i listen
 
-        Node<T> enNode = finnNode(indeks);
-        T oldValue = enNode.verdi;
-        enNode.verdi = nyverdi;
+        T oldValue = finnNode(indeks).verdi;
 
-        endringer++;
-        return oldValue;
+        if(nyverdi == null){
+            throw new NullPointerException("Ikke tillatt med nullverdier!");
+        }
+        else {
+
+            finnNode(indeks).verdi = nyverdi;
+
+            endringer++;
+            return oldValue;
+        }
     }
 
-    // TODO: OK. hentet fra kompendiet, delkapittel 1.2.3
+    // OK. hentet fra kompendiet, delkapittel 1.2.3
     private static void fratilKontroll(int antall, int fra, int til) {
         if (fra < 0)                                  // fra er negativ
             throw new IndexOutOfBoundsException("fra(" + fra + ") er negativ!");
 
         if (til > antall)                          // til er utenfor tabellen
-            throw new IndexOutOfBoundsException("til(" + til + ") > tablengde(" + antall + ")");
+            throw new IndexOutOfBoundsException("til(" + til + ") > tabellengde(" + antall + ")");
 
         if (fra > til)                                // fra er større enn til
             throw new IllegalArgumentException("fra(" + fra + ") > til(" + til + ") - illegalt intervall!");
@@ -224,24 +234,23 @@ public class DobbeltLenketListe<T> implements Liste<T> {
 
 
 // Oppgave 3b: skal returnere en liste som inneholder verdiene i intervallet
+    //TODO: denne blir feil fordi hent-metoden er feil
     public Liste<T> subliste(int fra, int til){ //fra=hode og til=hale
         fratilKontroll(antall, fra, til);
-        int antall = til - fra;
+        DobbeltLenketListe<T> subliste = new DobbeltLenketListe<>();
 
-        DobbeltLenketListe<T> subliste = null;
+        int antallISubliste = til - fra;
 
-        for(int i = 0; i < antall; i++){
-            T leggInn = hent(fra);
-            subliste.leggInn(i, leggInn);
-            fra++;
+        if(antallISubliste!=0) {
+
+            for (int i = fra; i < antallISubliste; i++) {
+                T verdi = hent(i);
+                subliste.leggInn(verdi);
+            }
+
         }
+            return subliste;
 
-        if(subliste.tom()){
-            Node<T> hodeSubliste = subliste.finnNode(fra);
-            Node<T> haleSubliste = subliste.finnNode(antall);
-        }
-
-        return subliste;
     }
 
 
@@ -331,7 +340,7 @@ public class DobbeltLenketListe<T> implements Liste<T> {
         return false;
     }
 
-// TODO: test denne
+// TODO: denne blir feil fordi hent() er feil
     @Override
     public T fjern(int indeks) {
         indeksKontroll(indeks, false);
@@ -359,7 +368,9 @@ public class DobbeltLenketListe<T> implements Liste<T> {
         finnNode(indeks-1).neste = finnNode(indeks+1);
         finnNode(indeks+1).forrige = finnNode(indeks-1).neste;
 
+        antall--;
 
+        System.out.print(utVerdi);
         return utVerdi;
     }
 
@@ -415,7 +426,7 @@ public class DobbeltLenketListe<T> implements Liste<T> {
 
 
 
-// Oppgave 9 Amalie
+// Oppgave 9 Amalie - kan ikke testes før oppg 8 er gjort
         @Override
         public void remove(){
 
