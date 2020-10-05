@@ -288,24 +288,30 @@ public class DobbeltLenketListe<T> implements Liste<T> {
     //Oppgave 5
     @Override
     public void leggInn(int indeks, T verdi) {
-        Objects.requireNonNull(verdi);
+        Objects.requireNonNull(verdi); //Kaster et unntak dersom verdi er null
+        indeksKontroll(indeks, false); //Kaster et unntak dersom indeksen er mindre enn null og større enn antall
 
-        //Må sjekke om indeks er større eller lik 0 og mindre eller lik antall
-
-        if(antall == 0){ //Hvis listen er tom opprettes det en hode-node som også er hale med verdien verdi, og forrigepeker og nestepeker peker til null.
-            hode = hale;
+        if(antall == 0){ //Hvis listen er tom opprettes det en node som både hode og hale peker på, med verdien verdi, og forrigepeker og nestepeker peker til null.
             hale = new Node<T>(verdi, null, null);
+            hode = hale;
         }
         else if(indeks == 0){ //Hvis indeks er 0 skal noden settes inn foran
-            hode = hode.forrige;
             hode.forrige= new Node<T>(verdi, null, hode);
+            hode = hode.forrige;
         }
         else if(indeks == antall){ //
-            hale = hale.neste;
             hale.neste= new Node<T>(verdi, hale, null);
+            hale = hale.neste;
         }
         else{
             //Sette inn verdi på ønsket indeks, verdien skal legges mellom to andre verdier
+            Node p = finnNode(indeks-1);
+            Node q = new Node<T>(verdi, finnNode(indeks-1), finnNode(indeks+1));
+            Node r = finnNode(indeks+1);
+            p.neste = q;
+            q.neste = r;
+            r.forrige = q;
+            q.forrige = p;
         }
 
 
