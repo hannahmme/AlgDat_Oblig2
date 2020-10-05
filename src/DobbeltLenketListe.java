@@ -242,11 +242,7 @@ public class DobbeltLenketListe<T> implements Liste<T> {
         return subliste;
     }
 
-
-
-
     // Oppgave 4 - Hannah
-
     /**
      * Metoden sjekker om verdi ligger i listen.
      * Current brukes som teller, hvor den starter på hode-noden
@@ -272,7 +268,6 @@ public class DobbeltLenketListe<T> implements Liste<T> {
         return -1;
     }
 
-
     /**
      * Metoden sjekker om en verdi finnes i listen.
      * Benytter metoden indeksTil().
@@ -291,7 +286,30 @@ public class DobbeltLenketListe<T> implements Liste<T> {
     //Oppgave 5
     @Override
     public void leggInn(int indeks, T verdi) {
-        throw new UnsupportedOperationException();
+        Objects.requireNonNull(verdi);
+
+        //Må sjekke om indeks er større eller lik 0 og mindre eller lik antall
+
+        if(antall == 0){ //Hvis listen er tom opprettes det en hode-node som også er hale med verdien verdi, og forrigepeker og nestepeker peker til null.
+            hode = hale;
+            hale = new Node<T>(verdi, null, null);
+        }
+        else if(indeks == 0){ //Hvis indeks er 0 skal noden settes inn foran
+            hode = hode.forrige;
+            hode.forrige= new Node<T>(verdi, null, hode);
+        }
+        else if(indeks == antall){ //
+            hale = hale.neste;
+            hale.neste= new Node<T>(verdi, hale, null);
+        }
+        else{
+            //Sette inn verdi på ønsket indeks, verdien skal legges mellom to andre verdier
+        }
+
+
+        antall++; //Øker antall noder i listen med 1 hver gang en ny node blir lagt inn.
+        endringer++; //Øker antall endringer med 1.
+
     }
 
 
@@ -377,9 +395,29 @@ public class DobbeltLenketListe<T> implements Liste<T> {
     }
 
 
-// Oppgave 7
+// Oppgave 7 - Hannah
+
+    /**
+     * Metode som nullstiller dobbeltlenkede listen med noder.
+     * Den bruker to hjelpevariabler, en som en teller og den andre
+     * som en midltertidig lagringsplass så vi ikke mister current.neste.
+     */
     @Override
     public void nullstill() {
+        Node current = this.hode;
+        while(current != hale){
+            System.out.println(antall);
+            current.verdi = null;
+            current.forrige = null;
+            Node temp = current.neste;
+            current.neste = null;
+            current = temp;
+            endringer++;
+            antall--;
+        }
+        hode = hale = null;
+        antall--;
+        endringer++;
     }
 
 
