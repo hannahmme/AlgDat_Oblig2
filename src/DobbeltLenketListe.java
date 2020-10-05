@@ -398,7 +398,7 @@ public class DobbeltLenketListe<T> implements Liste<T> {
         private boolean fjernOK;
         private int iteratorendringer;
 
-        // tror ikke denne skal endres?
+// tror ikke denne skal endres?
         private DobbeltLenketListeIterator(){
             denne = hode;     // p starter på den første i listen
             fjernOK = false;  // blir sann når next() kalles
@@ -412,18 +412,18 @@ public class DobbeltLenketListe<T> implements Liste<T> {
             throw new UnsupportedOperationException();
         }
 
-        // 8c: sette pekeren denne til noden som hører til den oppgitte indeksen
+// 8c: sette pekeren denne til noden som hører til den oppgitte indeksen
     private DobbeltLenketListeIterator(int indeks){
             throw new UnsupportedOperationException();
         }
 
-        // NB!! Denne koden skal ikke endres
+
+
+// NB!! Denne koden skal ikke endres
         @Override
         public boolean hasNext(){
             return denne != null;
         }
-
-
 
 
 // Oppgave 9 Amalie - kan ikke testes før oppg 8 er gjort
@@ -438,12 +438,29 @@ public class DobbeltLenketListe<T> implements Liste<T> {
 
             fjernOK = false;
 
-            //blir det definert en verdi p?
+            // nuller ut hode og hale hvis den som fjernes er eneste verdi
+            if(antall == 1){
+                hode.verdi = null;
+                hode = hode.neste;
+                hale = null;
+            }
 
-            
+            if(denne == null){ // hvis neste er hale
+                hale.forrige = denne.forrige.forrige;
+            }
 
+            if(denne.forrige == hode){ // hvis forrige er hode
+                hode.neste = denne;
+            }
 
-            throw new UnsupportedOperationException();
+            else {
+                denne.forrige = denne.forrige.forrige;
+                denne.forrige.forrige.neste = denne;
+            }
+
+            antall--;
+            iteratorendringer++;
+            endringer++;
         }
 
     } // class DobbeltLenketListeIterator
@@ -452,6 +469,9 @@ public class DobbeltLenketListe<T> implements Liste<T> {
 
 // Oppgave 10: ikke bruk hjelpestrukturer
     public static <T> void sorter(Liste<T> liste, Comparator<? super T> c) {
+
+
+
         throw new UnsupportedOperationException();
     }
 
