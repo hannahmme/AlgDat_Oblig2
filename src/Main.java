@@ -18,7 +18,7 @@ public class Main {
         //System.out.println("While-metoden :" + liste.indeksTilWhile(2));
 
         //Oppgave 2a
-        String[] s1 = {};
+        /*String[] s1 = {};
         String[] s2 = {"A"};
         String[] s3 = {null, "A", null, "B", null};
         DobbeltLenketListe<String> l1 = new DobbeltLenketListe<>(s1);
@@ -26,6 +26,14 @@ public class Main {
         DobbeltLenketListe<String> l3 = new DobbeltLenketListe<>(s3);
 
         System.out.print(l1.toString() + " " + l2.toString() + " " + l3.toString() + " " + l1.omvendtString() + " " +
-                l2.omvendtString() + " " + l3.omvendtString());
+                l2.omvendtString() + " " + l3.omvendtString());*/
+
+        //Oppgave 2b
+        /*DobbeltLenketListe<Integer> liste = new DobbeltLenketListe<>();
+        System.out.println(liste.toString() + " " + liste.omvendtString());
+        for(int i = 1; i <= 3; i++){
+            liste.leggInn(i);
+            System.out.println(liste.toString() + " " + liste.omvendtString());
+        }*/
     }
 }
