@@ -149,11 +149,13 @@ public class DobbeltLenketListe<T> implements Liste<T> {
     public boolean leggInn(T verdi) {
         Objects.requireNonNull(verdi); //sjekker om verdien er null, hvis den er null kastes en NullPointerException, hvis ikke returneres verdi.
 
-        if(antall == 0){ //Hvis listen er tom opprettes det en hode-node som også er hale med verdien verdi, og forrigepeker og nestepeker peker til null.
-            hode = hale = new Node<T>(verdi, null, null);
+        if(antall == 0){ //Hvis listen er tom opprettes det en node som både hode og hale peker på, med verdien verdi, og forrigepeker og nestepeker peker til null.
+            hale = new Node<T>(verdi, null, null);
+            hode = hale;
         }
-        else{ //Hvis listen ikke er tom settes halen til neste verdi, som er en ny node med verdi som vedi, forrigepeker peker til halen, og
-            hale = hale.neste = new Node<T>(verdi, hale, null);
+        else{ //Hvis listen ikke er tom opprettes en ny node med verdien verdi, med forrigepeker til hale og nestepeker til null. Den er hale sin neste, hale settes til å peke på hale.neste
+            hale.neste = new Node<T>(verdi, hale, null);
+            hale = hale.neste;
         }
 
         antall++; //Øker antall noder i listen med 1 hver gang en node blir lagt til.
