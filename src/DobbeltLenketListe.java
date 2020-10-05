@@ -253,11 +253,7 @@ public class DobbeltLenketListe<T> implements Liste<T> {
 
     }
 
-
-
-
     // Oppgave 4 - Hannah
-
     /**
      * Metoden sjekker om verdi ligger i listen.
      * Current brukes som teller, hvor den starter på hode-noden
@@ -282,7 +278,6 @@ public class DobbeltLenketListe<T> implements Liste<T> {
         }
         return -1;
     }
-
 
     /**
      * Metoden sjekker om en verdi finnes i listen.
@@ -398,9 +393,29 @@ public class DobbeltLenketListe<T> implements Liste<T> {
     }
 
 
-// Oppgave 7
+// Oppgave 7 - Hannah
+
+    /**
+     * Metode som nullstiller dobbeltlenkede listen med noder.
+     * Den bruker to hjelpevariabler, en som en teller og den andre
+     * som en midltertidig lagringsplass så vi ikke mister current.neste.
+     */
     @Override
     public void nullstill() {
+        Node current = this.hode;
+        while(current != hale){
+            System.out.println(antall);
+            current.verdi = null;
+            current.forrige = null;
+            Node temp = current.neste;
+            current.neste = null;
+            current = temp;
+            endringer++;
+            antall--;
+        }
+        hode = hale = null;
+        antall--;
+        endringer++;
     }
 
 

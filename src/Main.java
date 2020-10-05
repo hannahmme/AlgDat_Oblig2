@@ -10,10 +10,10 @@ public class Main {
 
         //Oppgave 1 og 4
         DobbeltLenketListe<Integer> liste = new DobbeltLenketListe<>(helttallsliste);
+        System.out.println("for-løkken: " + liste.indeksTil(2));
         //DobbeltLenketListe<Integer> liste2 = new DobbeltLenketListe<>(helttallsliste2);
         //DobbeltLenketListe<Integer> liste3 = new DobbeltLenketListe<>(helttallsliste3);
         //DobbeltLenketListe<Integer> liste4 = new DobbeltLenketListe<>(helttallsliste4);
-        System.out.println("for-løkken: " + liste.indeksTil(2));
         //System.out.println(liste.inneholder(3));
         //System.out.println("While-metoden :" + liste.indeksTilWhile(2));
 
@@ -29,11 +29,10 @@ public class Main {
                 l2.omvendtString() + " " + l3.omvendtString());*/
 
         //Oppgave 2b
-        /*DobbeltLenketListe<Integer> liste = new DobbeltLenketListe<>();
-        System.out.println(liste.toString() + " " + liste.omvendtString());
-        for(int i = 1; i <= 3; i++){
-            liste.leggInn(i);
-            System.out.println(liste.toString() + " " + liste.omvendtString());
-        }*/
+
+        //Oppgave 7
+        liste.nullstill();
+        System.out.println(liste.antall());;
+
     }
 }
