@@ -321,14 +321,10 @@ public class DobbeltLenketListe<T> implements Liste<T> {
     }
 
 
-    //Todo: Jeg har kommentert ut innholdet i metoden i oppg.6
-    //todo: enn så lenge, fordi det ga heap-Exception eller noe.
-    //todo: Testen klarte ikke kjøre lengre enn til oppgave 5 pga det.
-    // - Hannah
 // Oppgave 6 Amalie
     @Override
     public boolean fjern(T verdi) {
-/*        if(verdi == null){return false; }
+        if(verdi == null){return false; }
             // noden som skal fjernes
         if(verdi == null){return false; }
 
@@ -373,22 +369,15 @@ public class DobbeltLenketListe<T> implements Liste<T> {
         else {
             node.forrige.neste = node.neste;      // den forrige sin neste peker på den neste
             node.neste.forrige = node.forrige;    // den neste sin forrige er denne sin forrige
-
-            antall--;
         }
-        return false;*/
 
+        antall--;
         return true;
     }
 
-// TODO: denne blir feil fordi hent() er feil
-    //Todo: Jeg har kommentert ut innholdet i metoden i oppg. 6
-    //todo: enn så lenge, fordi det ga heap-Exception eller noe.
-    //todo: Testen klarte ikke kjøre lengre enn til oppgave 5 pga det.
-    // - Hannah
     @Override
     public T fjern(int indeks) {
-  /*      indeksKontroll(indeks, false);
+        indeksKontroll(indeks, false);
 
         // finner noden som skal fjernes
         Node<T> denne = finnNode(indeks);
@@ -422,8 +411,7 @@ public class DobbeltLenketListe<T> implements Liste<T> {
         endringer++;
 
         System.out.print(utVerdi);
-        return utVerdi;*/
-        return (T) "hello";
+        return utVerdi;
     }
 
 
