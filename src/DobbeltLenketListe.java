@@ -328,7 +328,7 @@ public class DobbeltLenketListe<T> implements Liste<T> {
 // Oppgave 6 Amalie
     @Override
     public boolean fjern(T verdi) {
-        if(verdi == null){return false; }
+/*        if(verdi == null){return false; }
             // noden som skal fjernes
 
         for (int i = 0; i < antall; i++) {
@@ -366,7 +366,7 @@ public class DobbeltLenketListe<T> implements Liste<T> {
             }
         }
         return false;*/
-    return true;
+        return true;
     }
 
 // TODO: denne blir feil fordi hent() er feil
@@ -376,7 +376,7 @@ public class DobbeltLenketListe<T> implements Liste<T> {
     // - Hannah
     @Override
     public T fjern(int indeks) {
-        /*indeksKontroll(indeks, false);
+  /*      indeksKontroll(indeks, false);
 
         // finner noden som skal fjernes
         Node<T> denne = finnNode(indeks);
@@ -426,7 +426,6 @@ public class DobbeltLenketListe<T> implements Liste<T> {
     public void nullstill() {
         Node current = this.hode;
         while(current != hale){
-            System.out.println(antall);
             current.verdi = null;
             current.forrige = null;
             Node temp = current.neste;
