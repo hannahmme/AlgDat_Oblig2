@@ -317,43 +317,53 @@ public class DobbeltLenketListe<T> implements Liste<T> {
     @Override
     public boolean fjern(T verdi) {
         if(verdi == null){return false; }
-            // noden som skal fjernes
 
+        // noden som skal fjernes
+        Node<T> node = hode;
+
+        // looper gjennom listen etter riktig verdi
         for (int i = 0; i < antall; i++) {
-            if (hent(i).equals(verdi)) {    // hvis den finner verdien i listen
-
-                if (antall == 1) {
-                    hode = null;
-                    hale = null;
-                    antall = 0;
-                }
-
-
-
-                else if (i == antall - 1) { // hvis neste er hale/ siste node skal fjernes
-                    hale = hale.forrige;
-                    hale.neste = null;
-                    antall--;
-                }
-
-                else if (i == 0) { // hvis forrige er hode/ første skal fjernes
-                    hode = hode.neste;
-                    hode.forrige = null;
-                    antall--;
-                }
-
-                else {
-                    Node<T> denne = finnNode(i);
-                    denne.forrige.neste = denne.neste;      // den forrige sin neste peker på den neste
-                    denne.neste.forrige = denne.forrige;    // den neste sin forrige er denne sin forrige
-
-                    antall--;
-
-                }
-                return true;
+            if (node.verdi.equals(verdi)) {    // hvis den finner verdien i listen
+                node = finnNode(i);
+                break;      // går ut av loopen, aktuell node er funnet
             }
+            node = node.neste;        // oppdaterer noden hvis den ikke er funnet
         }
-        return false;
+
+        // fant ikke verdien, returnerer false
+        if(node == null) { // hvis noden er null har man altså ikke funnet den i listen
+            return false;
+        }
+
+        // hvis det bare er én node
+        else if (antall == 1) {
+            hode = null;
+            hale = null;
+            antall = 0;
+        }
+
+        // hvis neste er hale/ siste node skal fjernes
+        else if (node == hale) {
+            hale = hale.forrige;
+            hale.neste = null;
+            antall--;
+        }
+
+        // hvis forrige er hode/ første skal fjernes
+        else if (node == hode) {
+            hode = hode.neste;
+            hode.forrige = null;
+            antall--;
+        }
+
+        else {
+            node.forrige.neste = node.neste;      // den forrige sin neste peker på den neste
+            node.neste.forrige = node.forrige;    // den neste sin forrige er denne sin forrige
+
+            antall--;
+        }
+
+        return true;
     }
 
     @Override
