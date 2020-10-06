@@ -415,8 +415,7 @@ public class DobbeltLenketListe<T> implements Liste<T> {
     }
 
 
-// Oppgave 7 - Hannah
-
+    // Oppgave 7 - Hannah
     /**
      * Metode som nullstiller dobbeltlenkede listen med noder.
      * Den bruker to hjelpevariabler, en som en teller og den andre
@@ -428,8 +427,10 @@ public class DobbeltLenketListe<T> implements Liste<T> {
         while(current != hale){
             current.verdi = null;
             current.forrige = null;
+            //Lagringsplass for neste node i rekken, før vi gjør current.neste-peker til null.
             Node temp = current.neste;
             current.neste = null;
+            //telleren "current" flyttes en plass fram
             current = temp;
             endringer++;
             antall--;
