@@ -444,7 +444,19 @@ public class DobbeltLenketListe<T> implements Liste<T> {
 //8b: skal returnere en instans av iteratorklassen
     @Override
     public Iterator<T> iterator() {
-        throw new UnsupportedOperationException();
+        final Iterator<T> iterator = new Iterator<>() {
+
+            @Override
+            public boolean hasNext() {
+                return false;
+            }
+
+            @Override
+            public T next() {
+                return null;
+            }
+        };
+        return iterator;
     }
 
 // 8d: sjekk om indeksen er lovlig. se så oppgavetekst
@@ -468,21 +480,32 @@ public class DobbeltLenketListe<T> implements Liste<T> {
 
 // 8a: se oppgavetekst
         @Override
-        public T next(){
-            throw new UnsupportedOperationException();
+        public T next() {
+            if(iteratorendringer != endringer){
+                throw new ConcurrentModificationException();
+            }
+            if(!hasNext()){
+                throw new NoSuchElementException("Listen har ingen noder.");
+            }
+            fjernOK = true;
+            //hjelpevariabel for å lagre verdien til denne
+            T verdi = denne.verdi;
+            denne = denne.neste;
+            return verdi;
         }
 
 // 8c: sette pekeren denne til noden som hører til den oppgitte indeksen
     private DobbeltLenketListeIterator(int indeks){
-            throw new UnsupportedOperationException();
+
         }
-
-
 
 // NB!! Denne koden skal ikke endres
         @Override
         public boolean hasNext(){
-            return denne != null;
+            if(denne != null){
+                return true;
+            }
+            return false;
         }
 
 
@@ -529,10 +552,10 @@ public class DobbeltLenketListe<T> implements Liste<T> {
 
 // Oppgave 10: ikke bruk hjelpestrukturer
     public static <T> void sorter(Liste<T> liste, Comparator<? super T> c) {
-        
-    }
 
 
+        }
 
+}
 
-} // class DobbeltLenketListe
+    // class DobbeltLenketListe
