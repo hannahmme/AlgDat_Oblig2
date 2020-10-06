@@ -487,9 +487,6 @@ public class DobbeltLenketListe<T> implements Liste<T> {
             iteratorendringer = endringer;  // teller endringer
         }
 
-
-        }
-
 // NB!! Denne koden skal ikke endres
         @Override
         public boolean hasNext(){
