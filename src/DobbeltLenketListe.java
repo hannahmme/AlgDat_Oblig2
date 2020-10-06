@@ -482,11 +482,13 @@ public class DobbeltLenketListe<T> implements Liste<T> {
         }
 
 
-// Oppgave 9 Amalie - kan ikke testes før oppg 8 er gjort
+// Oppgave 9 Amalie - TODO: kan ikke testes før oppg 8 er gjort
         @Override
         public void remove(){
 
-            // noe som skal kastes her, se oppg
+            if(denne==null || antall == 0){
+                throw new IllegalStateException("Kan ikke fjerne noden!");
+            }
 
             if(endringer!=iteratorendringer){
                 throw new ConcurrentModificationException("feil i oppg 9");
