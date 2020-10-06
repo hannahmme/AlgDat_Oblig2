@@ -29,6 +29,19 @@ public class Main {
                 l2.omvendtString() + " " + l3.omvendtString());*/
 
         //Oppgave 2b
+        /*DobbeltLenketListe<Integer> liste = new DobbeltLenketListe<>();
+        System.out.println(liste.toString() + " " + liste.omvendtString());
+        for(int i = 1; i <= 3; i++){
+            liste.leggInn(i);
+            System.out.println(liste.toString() + " " + liste.omvendtString());
+        }*/
+
+        //Oppgave 5
+        /*String[] string1 = {"A", "B", "C", "D", "E"};
+        DobbeltLenketListe<String> liste1 = new DobbeltLenketListe<>(string1);
+        System.out.println(liste1.toString() + " " + liste1.omvendtString());
+        liste1.leggInn(1, "Å");
+        System.out.println(liste1.toString() + " " + liste1.omvendtString());*/
 
         //Oppgave 7
         liste.nullstill();

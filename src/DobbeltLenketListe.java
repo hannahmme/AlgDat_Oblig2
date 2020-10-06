@@ -149,11 +149,13 @@ public class DobbeltLenketListe<T> implements Liste<T> {
     public boolean leggInn(T verdi) {
         Objects.requireNonNull(verdi); //sjekker om verdien er null, hvis den er null kastes en NullPointerException, hvis ikke returneres verdi.
 
-        if(antall == 0){ //Hvis listen er tom opprettes det en hode-node som også er hale med verdien verdi, og forrigepeker og nestepeker peker til null.
-            hode = hale = new Node<T>(verdi, null, null);
+        if(antall == 0){ //Hvis listen er tom opprettes det en node som både hode og hale peker på, med verdien verdi, og forrigepeker og nestepeker peker til null.
+            hale = new Node<T>(verdi, null, null);
+            hode = hale;
         }
-        else{ //Hvis listen ikke er tom settes halen til neste verdi, som er en ny node med verdi som vedi, forrigepeker peker til halen, og
-            hale = hale.neste = new Node<T>(verdi, hale, null);
+        else{ //Hvis listen ikke er tom opprettes en ny node med verdien verdi, med forrigepeker til hale og nestepeker til null. Den er hale sin neste, hale settes til å peke på hale.neste
+            hale.neste = new Node<T>(verdi, hale, null);
+            hale = hale.neste;
         }
 
         antall++; //Øker antall noder i listen med 1 hver gang en node blir lagt til.
@@ -163,7 +165,7 @@ public class DobbeltLenketListe<T> implements Liste<T> {
 
 
 
-// Oppgave 3a Amalie TODO: Tror denne skal være OK
+// Oppgave 3a Amalie
     private Node<T> finnNode(int indeks){
         int halvpart = antall/2;
 
@@ -174,9 +176,9 @@ public class DobbeltLenketListe<T> implements Liste<T> {
         }
 
         // mindre enn halvpart, let fra hode og gå til høyre med .next
-        else if(indeks<halvpart){
+        else if(indeks<=halvpart){
             node = hode;
-            for(int i = 0; i == indeks; i++){
+            for(int i = 0; i < indeks; i++){
                 node = node.neste;
             }
         }
@@ -184,7 +186,7 @@ public class DobbeltLenketListe<T> implements Liste<T> {
         // større: let fra hale og gå til venstre med .prev
         else{
             node = hale;
-            for(int i = antall; i == indeks; i--){
+            for(int i = antall-1; i > indeks; i--){
                 node = node.forrige;
             }
         }
@@ -192,12 +194,9 @@ public class DobbeltLenketListe<T> implements Liste<T> {
         return node;
     }
 
-
-    // TODO: Skal hente og returnere verdien på en node, men har noen problemer med indeksen??? tror at den har indeks 99999 uansett
     @Override
     public T hent(int indeks) {
-        indeksKontroll(indeks, false); // false betyr at indeksen ikke kan være lik antallet
-
+        indeksKontroll(indeks,false); // false betyr at indeksen ikke kan være lik antallet
         return finnNode(indeks).verdi;
     }
 
@@ -234,23 +233,15 @@ public class DobbeltLenketListe<T> implements Liste<T> {
 
 
 // Oppgave 3b: skal returnere en liste som inneholder verdiene i intervallet
-    //TODO: denne blir feil fordi hent-metoden er feil
     public Liste<T> subliste(int fra, int til){ //fra=hode og til=hale
         fratilKontroll(antall, fra, til);
         DobbeltLenketListe<T> subliste = new DobbeltLenketListe<>();
 
-        int antallISubliste = til - fra;
-
-        if(antallISubliste!=0) {
-
-            for (int i = fra; i < antallISubliste; i++) {
-                T verdi = hent(i);
-                subliste.leggInn(verdi);
-            }
-
+        for (int i = fra; i < til; i++) {
+            T verdi = hent(i);
+            subliste.leggInn(verdi);
         }
-            return subliste;
-
+        return subliste;
     }
 
     // Oppgave 4 - Hannah
@@ -297,24 +288,30 @@ public class DobbeltLenketListe<T> implements Liste<T> {
     //Oppgave 5
     @Override
     public void leggInn(int indeks, T verdi) {
-        Objects.requireNonNull(verdi);
+        Objects.requireNonNull(verdi); //Kaster et unntak dersom verdi er null
+        indeksKontroll(indeks, false); //Kaster et unntak dersom indeksen er mindre enn null og større enn antall
 
-        //Må sjekke om indeks er større eller lik 0 og mindre eller lik antall
-
-        if(antall == 0){ //Hvis listen er tom opprettes det en hode-node som også er hale med verdien verdi, og forrigepeker og nestepeker peker til null.
-            hode = hale;
+        if(antall == 0){ //Hvis listen er tom opprettes det en node som både hode og hale peker på, med verdien verdi, og forrigepeker og nestepeker peker til null.
             hale = new Node<T>(verdi, null, null);
+            hode = hale;
         }
         else if(indeks == 0){ //Hvis indeks er 0 skal noden settes inn foran
-            hode = hode.forrige;
             hode.forrige= new Node<T>(verdi, null, hode);
+            hode = hode.forrige;
         }
         else if(indeks == antall){ //
-            hale = hale.neste;
             hale.neste= new Node<T>(verdi, hale, null);
+            hale = hale.neste;
         }
         else{
             //Sette inn verdi på ønsket indeks, verdien skal legges mellom to andre verdier
+            Node p = finnNode(indeks-1);
+            Node q = new Node<T>(verdi, finnNode(indeks-1), finnNode(indeks+1));
+            Node r = finnNode(indeks+1);
+            p.neste = q;
+            q.neste = r;
+            r.forrige = q;
+            q.forrige = p;
         }
 
 
@@ -331,32 +328,41 @@ public class DobbeltLenketListe<T> implements Liste<T> {
 // Oppgave 6 Amalie
     @Override
     public boolean fjern(T verdi) {
-/*        if(verdi == null){throw new NoSuchElementException("nullverdi");}
+        if(verdi == null){return false; }
+            // noden som skal fjernes
 
-        if(antall>0) {
-            for (int i = 0; i < antall; i++) {
-                if (finnNode(i).verdi == verdi) {
+        for (int i = 0; i < antall; i++) {
+            if (hent(i).equals(verdi)) {    // hvis den finner verdien i listen
 
-                    if(antall == 1){
-                        hode.verdi = null;
-                        hode = hode.neste;
-                        hale = null;
-                    }
-
-                    if(finnNode(i).neste == hale){ // hvis neste er hale
-                        hale.forrige = finnNode(i-1);
-                    }
-                    if(finnNode(i).forrige == hode){ // hvis forrige er hode
-                        hode.neste = finnNode(i+1);
-                    }
-
-                    finnNode(i-1).neste = finnNode(i+1);
-                    finnNode(i+1).forrige = finnNode(i-1).neste;
-
-                    endringer++;
-                    antall--;
-                    return true;
+                if (antall == 1) {
+                    hode = null;
+                    hale = null;
+                    antall = 0;
                 }
+
+
+
+                else if (i == antall - 1) { // hvis neste er hale/ siste node skal fjernes
+                    hale = hale.forrige;
+                    hale.neste = null;
+                    antall--;
+                }
+
+                else if (i == 0) { // hvis forrige er hode/ første skal fjernes
+                    hode = hode.neste;
+                    hode.forrige = null;
+                    antall--;
+                }
+
+                else {
+                    Node<T> denne = finnNode(i);
+                    denne.forrige.neste = denne.neste;      // den forrige sin neste peker på den neste
+                    denne.neste.forrige = denne.forrige;    // den neste sin forrige er denne sin forrige
+
+                    antall--;
+
+                }
+                return true;
             }
         }
         return false;*/
@@ -372,30 +378,36 @@ public class DobbeltLenketListe<T> implements Liste<T> {
     public T fjern(int indeks) {
         /*indeksKontroll(indeks, false);
 
-        T utVerdi = hent(indeks);
-
         // finner noden som skal fjernes
         Node<T> denne = finnNode(indeks);
 
         // tilegner forrige node sin neste den som skal fjernes sin neste
         if(antall == 1){
-            hode.verdi = null;
-            hode = hode.neste;
+            hode = null;
             hale = null;
         }
 
-        if(denne.neste == hale){ // hvis neste er hale
-            hale.forrige = finnNode(indeks-1);
+        else if(indeks == antall-1){ // hvis neste er hale/ siste node skal fjernes
+            denne = hale;
+            hale = hale.forrige;
+            hale.neste = null;
         }
 
-        if(denne.forrige == hode){ // hvis forrige er hode
-            hode.neste = finnNode(indeks+1);
+        else if(indeks == 0){ // hvis forrige er hode/ første skal fjernes
+            denne = hode;
+            hode = hode.neste;
+            hode.forrige = null;
         }
 
-        finnNode(indeks-1).neste = finnNode(indeks+1);
-        finnNode(indeks+1).forrige = finnNode(indeks-1).neste;
+        else {
+            denne.forrige.neste = denne.neste;      // den forrige sin neste peker på den neste
+            denne.neste.forrige = denne.forrige;    // den neste sin forrige er denne sin forrige
+        }
+
+        T utVerdi = denne.verdi;
 
         antall--;
+        endringer++;
 
         System.out.print(utVerdi);
         return utVerdi;*/
