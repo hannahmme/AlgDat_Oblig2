@@ -529,10 +529,7 @@ public class DobbeltLenketListe<T> implements Liste<T> {
 
 // Oppgave 10: ikke bruk hjelpestrukturer
     public static <T> void sorter(Liste<T> liste, Comparator<? super T> c) {
-
-
-
-        throw new UnsupportedOperationException();
+        
     }
 
 
