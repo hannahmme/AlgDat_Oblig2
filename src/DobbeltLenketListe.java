@@ -440,12 +440,13 @@ public class DobbeltLenketListe<T> implements Liste<T> {
 //8b: skal returnere en instans av iteratorklassen
     @Override
     public Iterator<T> iterator() {
-        throw new UnsupportedOperationException();
+        return new DobbeltLenketListeIterator();
     }
 
 // 8d: sjekk om indeksen er lovlig. se så oppgavetekst
     public Iterator<T> iterator(int indeks) {
-        throw new UnsupportedOperationException();
+        indeksKontroll(indeks, false);
+        return new DobbeltLenketListeIterator(indeks);
     }
 
     private class DobbeltLenketListeIterator implements Iterator<T>
@@ -470,7 +471,10 @@ public class DobbeltLenketListe<T> implements Liste<T> {
 
 // 8c: sette pekeren denne til noden som hører til den oppgitte indeksen
     private DobbeltLenketListeIterator(int indeks){
-            throw new UnsupportedOperationException();
+            Node nodePaaIndeks = finnNode(indeks);
+            denne = nodePaaIndeks;
+            fjernOK = false;  // blir sann når next() kalles
+            iteratorendringer = endringer;  // teller endringer
         }
 
 
