@@ -324,10 +324,14 @@ public class DobbeltLenketListe<T> implements Liste<T> {
     }
 
 
+    //Todo: Jeg har kommentert ut innholdet i metoden i oppg.6
+    //todo: enn så lenge, fordi det ga heap-Exception eller noe.
+    //todo: Testen klarte ikke kjøre lengre enn til oppgave 5 pga det.
+    // - Hannah
 // Oppgave 6 Amalie
     @Override
     public boolean fjern(T verdi) {
-        if(verdi == null){throw new NoSuchElementException("nullverdi");}
+/*        if(verdi == null){throw new NoSuchElementException("nullverdi");}
 
         if(antall>0) {
             for (int i = 0; i < antall; i++) {
@@ -355,13 +359,18 @@ public class DobbeltLenketListe<T> implements Liste<T> {
                 }
             }
         }
-        return false;
+        return false;*/
+    return true;
     }
 
 // TODO: denne blir feil fordi hent() er feil
+    //Todo: Jeg har kommentert ut innholdet i metoden i oppg. 6
+    //todo: enn så lenge, fordi det ga heap-Exception eller noe.
+    //todo: Testen klarte ikke kjøre lengre enn til oppgave 5 pga det.
+    // - Hannah
     @Override
     public T fjern(int indeks) {
-        indeksKontroll(indeks, false);
+        /*indeksKontroll(indeks, false);
 
         T utVerdi = hent(indeks);
 
@@ -389,7 +398,8 @@ public class DobbeltLenketListe<T> implements Liste<T> {
         antall--;
 
         System.out.print(utVerdi);
-        return utVerdi;
+        return utVerdi;*/
+        return (T) "hello";
     }
 
 
