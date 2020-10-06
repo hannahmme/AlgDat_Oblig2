@@ -486,7 +486,7 @@ public class DobbeltLenketListe<T> implements Liste<T> {
         @Override
         public void remove(){
 
-            if(denne==null || antall == 0){
+            if(denne.forrige==null || antall == 0 || !fjernOK){
                 throw new IllegalStateException("Kan ikke fjerne noden!");
             }
 
@@ -496,24 +496,29 @@ public class DobbeltLenketListe<T> implements Liste<T> {
 
             fjernOK = false;
 
+            // noden som skal fjernes
+            Node<T> node = hode;
+
             // nuller ut hode og hale hvis den som fjernes er eneste verdi
             if(antall == 1){
-                hode.verdi = null;
-                hode = hode.neste;
+                hode = null;
                 hale = null;
             }
 
-            if(denne == null){ // hvis neste er hale
-                hale.forrige = denne.forrige.forrige;
+            else if(node.neste == null){ // hvis neste er hale/ siste node skal fjernes
+                hale = node.forrige;
+                hale.neste = null;
             }
 
-            if(denne.forrige == hode){ // hvis forrige er hode
-                hode.neste = denne;
+            else if(node.forrige == null){ // hvis forrige er hode/ første skal fjernes
+                hode = denne;
+                hode.forrige = null;
             }
 
             else {
-                denne.forrige = denne.forrige.forrige;
-                denne.forrige.forrige.neste = denne;
+                node = denne.forrige;
+                node.forrige.neste = denne;      // den forrige sin neste peker på den neste
+                denne.forrige = node.forrige;    // den neste sin forrige er denne sin forrige
             }
 
             antall--;
