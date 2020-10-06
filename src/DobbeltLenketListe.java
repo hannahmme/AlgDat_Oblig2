@@ -321,65 +321,63 @@ public class DobbeltLenketListe<T> implements Liste<T> {
     }
 
 
-    //Todo: Jeg har kommentert ut innholdet i metoden i oppg.6
-    //todo: enn så lenge, fordi det ga heap-Exception eller noe.
-    //todo: Testen klarte ikke kjøre lengre enn til oppgave 5 pga det.
-    // - Hannah
 // Oppgave 6 Amalie
     @Override
     public boolean fjern(T verdi) {
-/*        if(verdi == null){return false; }
-            // noden som skal fjernes
 
-        for (int i = 0; i < antall; i++) {
-            if (hent(i).equals(verdi)) {    // hvis den finner verdien i listen
+        if(verdi == null){return false; }
 
-                if (antall == 1) {
-                    hode = null;
-                    hale = null;
-                    antall = 0;
-                }
+        // noden som skal fjernes
+        Node<T> node = hode;
 
-
-
-                else if (i == antall - 1) { // hvis neste er hale/ siste node skal fjernes
-                    hale = hale.forrige;
-                    hale.neste = null;
-                    antall--;
-                }
-
-                else if (i == 0) { // hvis forrige er hode/ første skal fjernes
-                    hode = hode.neste;
-                    hode.forrige = null;
-                    antall--;
-                }
-
-                else {
-                    Node<T> denne = finnNode(i);
-                    denne.forrige.neste = denne.neste;      // den forrige sin neste peker på den neste
-                    denne.neste.forrige = denne.forrige;    // den neste sin forrige er denne sin forrige
-
-                    antall--;
-
-                }
-                return true;
+        do{
+            if (node.verdi.equals(verdi)) {    // hvis den finner verdien i listen
+                break;      // går ut av loopen, aktuell node er funnet
             }
+            node = node.neste;
+        } while(node!=null);
+
+
+
+        // fant ikke verdien, returnerer false
+        if(node == null) { // hvis noden er null har man altså ikke funnet den i listen
+            return false;
         }
-        return false;*/
+
+        // hvis det bare er én node
+        else if (antall == 1) {
+            hode = null;
+            hale = null;
+        }
+
+        // hvis neste er hale/ siste node skal fjernes
+        else if (node == hale) {
+            hale = hale.forrige;
+            hale.neste = null;
+        }
+
+        // hvis forrige er hode/ første skal fjernes
+        else if (node == hode) {
+            hode = hode.neste;
+            hode.forrige = null;
+        }
+
+        else {
+            node.forrige.neste = node.neste;      // den forrige sin neste peker på den neste
+            node.neste.forrige = node.forrige;    // den neste sin forrige er denne sin forrige
+        }
+
+        antall--;
+        endringer++;
         return true;
     }
 
-// TODO: denne blir feil fordi hent() er feil
-    //Todo: Jeg har kommentert ut innholdet i metoden i oppg. 6
-    //todo: enn så lenge, fordi det ga heap-Exception eller noe.
-    //todo: Testen klarte ikke kjøre lengre enn til oppgave 5 pga det.
-    // - Hannah
     @Override
     public T fjern(int indeks) {
-  /*      indeksKontroll(indeks, false);
+        indeksKontroll(indeks, false);
 
         // finner noden som skal fjernes
-        Node<T> denne = finnNode(indeks);
+        Node<T> denne = hale;
 
         // tilegner forrige node sin neste den som skal fjernes sin neste
         if(antall == 1){
@@ -388,7 +386,6 @@ public class DobbeltLenketListe<T> implements Liste<T> {
         }
 
         else if(indeks == antall-1){ // hvis neste er hale/ siste node skal fjernes
-            denne = hale;
             hale = hale.forrige;
             hale.neste = null;
         }
@@ -400,6 +397,7 @@ public class DobbeltLenketListe<T> implements Liste<T> {
         }
 
         else {
+            denne = finnNode(indeks);
             denne.forrige.neste = denne.neste;      // den forrige sin neste peker på den neste
             denne.neste.forrige = denne.forrige;    // den neste sin forrige er denne sin forrige
         }
@@ -409,9 +407,7 @@ public class DobbeltLenketListe<T> implements Liste<T> {
         antall--;
         endringer++;
 
-        System.out.print(utVerdi);
-        return utVerdi;*/
-        return (T) "hello";
+        return utVerdi;
     }
 
 
@@ -509,11 +505,13 @@ public class DobbeltLenketListe<T> implements Liste<T> {
         }
 
 
-// Oppgave 9 Amalie - kan ikke testes før oppg 8 er gjort
+// Oppgave 9 Amalie - TODO: kan ikke testes før oppg 8 er gjort
         @Override
         public void remove(){
 
-            // noe som skal kastes her, se oppg
+            if(denne.forrige==null || antall == 0 || !fjernOK){
+                throw new IllegalStateException("Kan ikke fjerne noden!");
+            }
 
             if(endringer!=iteratorendringer){
                 throw new ConcurrentModificationException("feil i oppg 9");
@@ -521,24 +519,29 @@ public class DobbeltLenketListe<T> implements Liste<T> {
 
             fjernOK = false;
 
+            // noden som skal fjernes
+            Node<T> node = hode;
+
             // nuller ut hode og hale hvis den som fjernes er eneste verdi
             if(antall == 1){
-                hode.verdi = null;
-                hode = hode.neste;
+                hode = null;
                 hale = null;
             }
 
-            if(denne == null){ // hvis neste er hale
-                hale.forrige = denne.forrige.forrige;
+            else if(node.neste == null){ // hvis neste er hale/ siste node skal fjernes
+                hale = node.forrige;
+                hale.neste = null;
             }
 
-            if(denne.forrige == hode){ // hvis forrige er hode
-                hode.neste = denne;
+            else if(node.forrige == null){ // hvis forrige er hode/ første skal fjernes
+                hode = denne;
+                hode.forrige = null;
             }
 
             else {
-                denne.forrige = denne.forrige.forrige;
-                denne.forrige.forrige.neste = denne;
+                node = denne.forrige;
+                node.forrige.neste = denne;      // den forrige sin neste peker på den neste
+                denne.forrige = node.forrige;    // den neste sin forrige er denne sin forrige
             }
 
             antall--;
