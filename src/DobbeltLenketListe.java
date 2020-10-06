@@ -289,7 +289,7 @@ public class DobbeltLenketListe<T> implements Liste<T> {
     @Override
     public void leggInn(int indeks, T verdi) {
         Objects.requireNonNull(verdi); //Kaster et unntak dersom verdi er null
-        indeksKontroll(indeks, false); //Kaster et unntak dersom indeksen er mindre enn null og større enn antall
+        indeksKontroll(indeks, true); //Kaster et unntak dersom indeksen er mindre enn null og større enn antall
 
         if(antall == 0){ //Hvis listen er tom opprettes det en node som både hode og hale peker på, med verdien verdi, og forrigepeker og nestepeker peker til null.
             hale = new Node<T>(verdi, null, null);
@@ -299,25 +299,23 @@ public class DobbeltLenketListe<T> implements Liste<T> {
             hode.forrige= new Node<T>(verdi, null, hode);
             hode = hode.forrige;
         }
-        else if(indeks == antall){ //
+        else if(indeks == antall){ //Hvis indeks er det samme som antall skal noden settes inn på slutten, og halen skal peke på denne
             hale.neste= new Node<T>(verdi, hale, null);
             hale = hale.neste;
         }
-        else{
-            //Sette inn verdi på ønsket indeks, verdien skal legges mellom to andre verdier
-            Node p = finnNode(indeks-1);
-            Node q = new Node<T>(verdi, finnNode(indeks-1), finnNode(indeks+1));
-            Node r = finnNode(indeks+1);
-            p.neste = q;
-            q.neste = r;
-            r.forrige = q;
-            q.forrige = p;
-        }
+        else{ //Setter en inn en verdi mellom to andre verdier
+            //Oppretter de tre relevante nodene p, r, q
+            Node p = finnNode(indeks-1); //Bruker metoden finnNode() til at node p peker på noden med indeksen indeks-1
+            Node r = finnNode(indeks); //Node r peker på noden med indeksen indeks, som den nye noden skal peke på
+            Node q = new Node<T>(verdi, p, r); //Node q peker på en ny node med verdien verdi, som har forrigepeker til p og nestepeker til r
 
+            r = q.neste; //Noden r settes til å peke på q sin neste
+            p.neste = q; //Setter at p sin nestepeker peker på q
+            r.forrige = q; //Setter at r sin forrigepeker peker på q
+        }
 
         antall++; //Øker antall noder i listen med 1 hver gang en ny node blir lagt inn.
         endringer++; //Øker antall endringer med 1.
-
     }
 
 
