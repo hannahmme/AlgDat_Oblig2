@@ -1,3 +1,6 @@
+import java.util.Arrays;
+import java.util.Comparator;
+
 public class Main {
 
     //Oppgave 0 - no runtime error
@@ -45,7 +48,14 @@ public class Main {
 
         //Oppgave 7
         liste.nullstill();
-        System.out.println(liste.antall());;
+        System.out.println(liste.antall());
+
+        System.out.println(liste.tom());
+
+        //Oppgave 10
+        Liste<Integer> genericList = new DobbeltLenketListe<>(helttallsliste);
+        DobbeltLenketListe.sorter(genericList, Comparator.naturalOrder());
+        System.out.println(Arrays.toString(helttallsliste));
 
     }
 }

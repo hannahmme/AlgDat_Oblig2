@@ -465,8 +465,18 @@ public class DobbeltLenketListe<T> implements Liste<T> {
 
 // 8a: se oppgavetekst
         @Override
-        public T next(){
-            throw new UnsupportedOperationException();
+        public T next() {
+            if(iteratorendringer != endringer){
+                throw new ConcurrentModificationException();
+            }
+            if(!hasNext()){
+                throw new NoSuchElementException("Listen har ingen noder.");
+            }
+            fjernOK = true;
+            //hjelpevariabel for å lagre verdien til denne
+            T verdi = denne.verdi;
+            denne = denne.neste;
+            return verdi;
         }
 
 // 8c: sette pekeren denne til noden som hører til den oppgitte indeksen
@@ -478,11 +488,15 @@ public class DobbeltLenketListe<T> implements Liste<T> {
         }
 
 
+        }
 
 // NB!! Denne koden skal ikke endres
         @Override
         public boolean hasNext(){
-            return denne != null;
+            if(denne != null){
+                return true;
+            }
+            return false;
         }
 
 
@@ -536,10 +550,10 @@ public class DobbeltLenketListe<T> implements Liste<T> {
 
 // Oppgave 10: ikke bruk hjelpestrukturer
     public static <T> void sorter(Liste<T> liste, Comparator<? super T> c) {
-        
-    }
 
 
+        }
 
+}
 
-} // class DobbeltLenketListe
+    // class DobbeltLenketListe
