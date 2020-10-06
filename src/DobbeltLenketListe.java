@@ -329,17 +329,15 @@ public class DobbeltLenketListe<T> implements Liste<T> {
 
         // noden som skal fjernes
         Node<T> node = hode;
-        int indeks = 0;
 
-        // looper gjennom listen etter riktig verdi
-        for (int i = 0; i < antall; i++) {
+        do{
             if (node.verdi.equals(verdi)) {    // hvis den finner verdien i listen
-                node = finnNode(i);
-                indeks = i;
                 break;      // går ut av loopen, aktuell node er funnet
             }
-            node = node.neste;        // oppdaterer noden hvis den ikke er funnet
-        }
+            node = node.neste;
+        } while(node!=null);
+
+
 
         // fant ikke verdien, returnerer false
         if(node == null) { // hvis noden er null har man altså ikke funnet den i listen
@@ -365,12 +363,12 @@ public class DobbeltLenketListe<T> implements Liste<T> {
         }
 
         else {
-            node = finnNode(indeks);
             node.forrige.neste = node.neste;      // den forrige sin neste peker på den neste
             node.neste.forrige = node.forrige;    // den neste sin forrige er denne sin forrige
         }
 
         antall--;
+        endringer++;
         return true;
     }
 
@@ -379,7 +377,7 @@ public class DobbeltLenketListe<T> implements Liste<T> {
         indeksKontroll(indeks, false);
 
         // finner noden som skal fjernes
-        Node<T> denne = finnNode(indeks);
+        Node<T> denne = hale;
 
         // tilegner forrige node sin neste den som skal fjernes sin neste
         if(antall == 1){
@@ -388,7 +386,6 @@ public class DobbeltLenketListe<T> implements Liste<T> {
         }
 
         else if(indeks == antall-1){ // hvis neste er hale/ siste node skal fjernes
-            denne = hale;
             hale = hale.forrige;
             hale.neste = null;
         }
@@ -400,6 +397,7 @@ public class DobbeltLenketListe<T> implements Liste<T> {
         }
 
         else {
+            denne = finnNode(indeks);
             denne.forrige.neste = denne.neste;      // den forrige sin neste peker på den neste
             denne.neste.forrige = denne.forrige;    // den neste sin forrige er denne sin forrige
         }
