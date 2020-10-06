@@ -324,17 +324,18 @@ public class DobbeltLenketListe<T> implements Liste<T> {
 // Oppgave 6 Amalie
     @Override
     public boolean fjern(T verdi) {
-        if(verdi == null){return false; }
-            // noden som skal fjernes
+
         if(verdi == null){return false; }
 
         // noden som skal fjernes
         Node<T> node = hode;
+        int indeks = 0;
 
         // looper gjennom listen etter riktig verdi
         for (int i = 0; i < antall; i++) {
             if (node.verdi.equals(verdi)) {    // hvis den finner verdien i listen
                 node = finnNode(i);
+                indeks = i;
                 break;      // går ut av loopen, aktuell node er funnet
             }
             node = node.neste;        // oppdaterer noden hvis den ikke er funnet
@@ -349,24 +350,22 @@ public class DobbeltLenketListe<T> implements Liste<T> {
         else if (antall == 1) {
             hode = null;
             hale = null;
-            antall = 0;
         }
 
         // hvis neste er hale/ siste node skal fjernes
         else if (node == hale) {
             hale = hale.forrige;
             hale.neste = null;
-            antall--;
         }
 
         // hvis forrige er hode/ første skal fjernes
         else if (node == hode) {
             hode = hode.neste;
             hode.forrige = null;
-            antall--;
         }
 
         else {
+            node = finnNode(indeks);
             node.forrige.neste = node.neste;      // den forrige sin neste peker på den neste
             node.neste.forrige = node.forrige;    // den neste sin forrige er denne sin forrige
         }
@@ -410,7 +409,6 @@ public class DobbeltLenketListe<T> implements Liste<T> {
         antall--;
         endringer++;
 
-        System.out.print(utVerdi);
         return utVerdi;
     }
 
