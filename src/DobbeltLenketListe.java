@@ -468,7 +468,7 @@ public class DobbeltLenketListe<T> implements Liste<T> {
 
         // 8c: sette pekeren denne til noden som hører til den oppgitte indeksen
         private DobbeltLenketListeIterator(int indeks) {
-            Node nodePaaIndeks = finnNode(indeks);
+            Node<T> nodePaaIndeks = finnNode(indeks);
             denne = nodePaaIndeks;
             fjernOK = false;  // blir sann når next() kalles
             iteratorendringer = endringer;  // teller endringer
