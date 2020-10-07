@@ -495,11 +495,11 @@ public class DobbeltLenketListe<T> implements Liste<T> {
         }
 
 
-// Oppgave 9 Amalie - TODO: kan ikke testes før oppg 8 er gjort
+// Oppgave 9 Amalie
         @Override
         public void remove(){
 
-            if(denne.forrige==null || antall == 0 || !fjernOK){
+            if(!fjernOK){
                 throw new IllegalStateException("Kan ikke fjerne noden!");
             }
 
@@ -510,7 +510,7 @@ public class DobbeltLenketListe<T> implements Liste<T> {
             fjernOK = false;
 
             // noden som skal fjernes
-            Node<T> node = hode;
+            Node<T> node;
 
             // nuller ut hode og hale hvis den som fjernes er eneste verdi
             if(antall == 1){
@@ -518,16 +518,20 @@ public class DobbeltLenketListe<T> implements Liste<T> {
                 hale = null;
             }
 
-            else if(node.neste == null){ // hvis neste er hale/ siste node skal fjernes
-                hale = node.forrige;
+
+            //siste skal fjernes. Måtte ha denne først, ellers var det false?
+            else if(denne == null){
+                hale = hale.forrige;
                 hale.neste = null;
             }
 
-            else if(node.forrige == null){ // hvis forrige er hode/ første skal fjernes
+            // hvis første skal fjernes
+            else if(denne.forrige == hode){ // hvis forrige er hode/ første skal fjernes
                 hode = denne;
                 hode.forrige = null;
             }
 
+            // hvis den er i midten må vi fjerne pekerne rundt node
             else {
                 node = denne.forrige;
                 node.forrige.neste = denne;      // den forrige sin neste peker på den neste
