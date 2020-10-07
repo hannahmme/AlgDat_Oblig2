@@ -542,13 +542,29 @@ public class DobbeltLenketListe<T> implements Liste<T> {
     } // class DobbeltLenketListeIterator
 
 
-
-// Oppgave 10: ikke bruk hjelpestrukturer
+    
+    // Oppgave 10: ikke bruk hjelpestrukturer
     public static <T> void sorter(Liste<T> liste, Comparator<? super T> c) {
+        DobbeltLenketListe<T> list = (DobbeltLenketListe<T>) liste;
+
+        Node<T> current = list.hode;
+        Node<T> currentSinNext = current.neste;
+        Node<T> temp = null;
+        while (current != list.hale) {
+            if (c.compare(current.verdi, currentSinNext.verdi) == 1) {
+                temp = current;
+                current = currentSinNext;
+                currentSinNext = temp;
+                current = current.neste;
+            }
+            if (current.verdi.equals(currentSinNext.verdi)) {
+
+            }
 
 
         }
 
+    }
 }
 
     // class DobbeltLenketListe
