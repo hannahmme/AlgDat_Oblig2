@@ -52,10 +52,18 @@ public class Main {
 
         System.out.println(liste.tom());
 
+        //Oppgave 8
+        String[] navn = {"Lars","Anders","Bodil","Kari","Per","Berit"};
+        Liste<String> mip = new DobbeltLenketListe<>(navn);
+        mip.forEach(s -> System.out.print(s + " "));
+        System.out.println();
+        for (String s : mip) System.out.print(s + " ");
+
+
         //Oppgave 10
         Liste<Integer> genericList = new DobbeltLenketListe<>(helttallsliste);
         DobbeltLenketListe.sorter(genericList, Comparator.naturalOrder());
-        System.out.println(Arrays.toString(helttallsliste));
+        //System.out.println(Arrays.toString(helttallsliste));
 
     }
 }
