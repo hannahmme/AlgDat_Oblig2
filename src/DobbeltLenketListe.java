@@ -542,25 +542,27 @@ public class DobbeltLenketListe<T> implements Liste<T> {
     } // class DobbeltLenketListeIterator
 
 
-    
+    //https://www.techiedelight.com/given-linked-list-change-sorted-order/ leser litt herfra 
     // Oppgave 10: ikke bruk hjelpestrukturer
     public static <T> void sorter(Liste<T> liste, Comparator<? super T> c) {
         DobbeltLenketListe<T> list = (DobbeltLenketListe<T>) liste;
 
-        Node<T> current = list.hode;
-        Node<T> currentSinNext = current.neste;
-        Node<T> temp = null;
-        while (current != list.hale) {
-            if (c.compare(current.verdi, currentSinNext.verdi) == 1) {
-                temp = current;
-                current = currentSinNext;
-                currentSinNext = temp;
-                current = current.neste;
-            }
-            if (current.verdi.equals(currentSinNext.verdi)) {
+        Node<T> current;
+        Node<T> currentSinNeste;
+        T temp;
 
-            }
+        if(list.hode == null){
+            return;
+        }
+        for(current = list.hode; current.neste != null; current = current.neste){
+            for(currentSinNeste = current.neste; currentSinNeste != null; currentSinNeste = currentSinNeste.neste){
 
+                if(c.compare(current.verdi, currentSinNeste.verdi) == 1){
+                    temp = current.verdi;
+                    current.verdi = currentSinNeste.verdi;
+                    currentSinNeste.verdi = temp;
+                }
+            }
 
         }
 
