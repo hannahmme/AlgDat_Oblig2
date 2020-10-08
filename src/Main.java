@@ -46,6 +46,22 @@ public class Main {
         liste1.leggInn(1, "Å");
         System.out.println(liste1.toString() + " " + liste1.omvendtString());*/
 
+        //Oppgave 6
+        System.out.println("Oppgave 6 - fjern verdi: ");
+        String[] string1 = {"A", "B", "C", "D", "E"};
+        DobbeltLenketListe<String> liste1 = new DobbeltLenketListe<>(string1);
+        System.out.println(liste1.toString() + " " + liste1.omvendtString());
+        System.out.println(liste1.fjern("C"));
+        System.out.println(liste1.toString() + " " + liste1.omvendtString());
+        System.out.println();
+        System.out.println("Oppgave 6 - fjern indeks: ");
+        String[] string2 = {"A", "B", "C", "D", "E"};
+        DobbeltLenketListe<String> liste2 = new DobbeltLenketListe<>(string1);
+        System.out.println(liste2.toString() + " " + liste2.omvendtString());
+        System.out.println(liste2.fjern(1));
+        System.out.println(liste2.toString() + " " + liste2.omvendtString());
+        System.out.println();
+
         //Oppgave 7
         liste.nullstill();
         System.out.println(liste.antall());
