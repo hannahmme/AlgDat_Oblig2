@@ -38,14 +38,20 @@ public class DobbeltLenketListe<T> implements Liste<T> {
     }
 
 
-    // Oppgave 1 - Hannah
-    // metoden skal returnere antall verdier
+    /**
+     * Oppgave 1
+     * @return - returnerer antallet verdier i listen
+     */
+
     @Override
     public int antall() {
         return this.antall;
     }
 
-    // metoden skal returnere true/ false om den er tom eller ikke
+    /**
+     * Oppgave 1
+     * @return - returnerer true dersom listen er tom, false ellers
+     */
     @Override
     public boolean tom() {
         if (antall == 0) {
@@ -56,10 +62,11 @@ public class DobbeltLenketListe<T> implements Liste<T> {
 
 
     /**
+     * Oppgave 1
      * Konstruktør som oppretter en dobbelt lenket liste med noder.
      * Bruker Objects sin .requireNonNull() for å sjekke om tabellen er null.
      * Current brukes som en teller, som starter på plass hode
-     * og flytter seg en plass til høyre for hver ny node.
+     * og flytter seg en plass til høyre for hver nye node.
      * Antall økes hver gang en node legges til.
      * Hvis hode er null, legges det til verdi og forrige og neste-peker er lik null.
      * Deretter legges nodene til etter det, og forrige og neste-peker oppdateres.
@@ -74,7 +81,7 @@ public class DobbeltLenketListe<T> implements Liste<T> {
         for (T verdi : a) {
             //tar ikke med null-verdier
             if (verdi != null) {
-                Node<T> nyNode = new Node<T>(verdi);
+                Node<T> nyNode = new Node<>(verdi);
                 antall++;
                 endringer++;
                 if (hode == null) {
@@ -88,11 +95,11 @@ public class DobbeltLenketListe<T> implements Liste<T> {
                     nyNode.neste = null;
                     current.neste = nyNode;
                 }
-                //oppdater neste, flytte current 1 fram
+                //oppdater neste, flytter current 1 fram
                 current = nyNode;
             }
         }
-        //setter hale-p
+        //setter hale-noden til bakerste node
         hale = current;
     }
 
@@ -242,9 +249,10 @@ public class DobbeltLenketListe<T> implements Liste<T> {
         return subliste;
     }
 
-    // Oppgave 4 - Hannah
 
     /**
+     * Oppgave 4
+     *
      * Metoden sjekker om verdi ligger i listen.
      * Current brukes som teller, hvor den starter på hode-noden
      * og øker med current.neste for hver iterasjon.
@@ -270,12 +278,15 @@ public class DobbeltLenketListe<T> implements Liste<T> {
     }
 
     /**
+     * Oppgave 4
+     *
      * Metoden sjekker om en verdi finnes i listen.
      * Benytter metoden indeksTil().
      *
      * @param verdi - verdien det letes etter
      * @return - true hvis verdien finnes i listen, ellers false
      */
+
     @Override
     public boolean inneholder(T verdi) {
         if (indeksTil(verdi) != -1) {
@@ -401,9 +412,8 @@ public class DobbeltLenketListe<T> implements Liste<T> {
     }
 
 
-    // Oppgave 7 - Hannah
-
     /**
+     * Oppgave 7
      * Metode som nullstiller dobbeltlenkede listen med noder.
      * Den bruker to hjelpevariabler, en som en teller og den andre
      * som en midltertidig lagringsplass så vi ikke mister current.neste.
@@ -427,14 +437,22 @@ public class DobbeltLenketListe<T> implements Liste<T> {
         endringer++;
     }
 
+    /**
+     * Oppgave 8b
+     * @return - returnerer en instans av iteratorklassen "DobbeltLenketListeIterator()".
+     */
 
-    //8b: skal returnere en instans av iteratorklassen
     @Override
     public Iterator<T> iterator() {
         return new DobbeltLenketListeIterator();
     }
 
-    // 8d: sjekk om indeksen er lovlig. se så oppgavetekst
+    /**
+     * Oppgave 8d
+     * @param indeks - skal sjekkes om er lovlig
+     * @return - returnerer instans av iteratorklassen "DobbeltLenketListeIterator()".
+     */
+
     public Iterator<T> iterator(int indeks) {
         indeksKontroll(indeks, false);
         return new DobbeltLenketListeIterator(indeks);
@@ -445,15 +463,19 @@ public class DobbeltLenketListe<T> implements Liste<T> {
         private boolean fjernOK;
         private int iteratorendringer;
 
-        // tror ikke denne skal endres?
         private DobbeltLenketListeIterator() {
             denne = hode;     // p starter på den første i listen
             fjernOK = false;  // blir sann når next() kalles
             iteratorendringer = endringer;  // teller endringer
         }
 
+        /**
+         * Oppgave 8a
+         * Metoden sjekker om det er noen neste-verdi.
+         * Er den tom, kastes NoSuchElementException.
+         * @return - "denne" returneres
+         */
 
-        // 8a: se oppgavetekst
         @Override
         public T next() {
             if (iteratorendringer != endringer) {
@@ -469,7 +491,14 @@ public class DobbeltLenketListe<T> implements Liste<T> {
             return verdi;
         }
 
-        // 8c: sette pekeren denne til noden som hører til den oppgitte indeksen
+        /**
+         * Oppgave 8c
+         *
+         * Metoden skal sette denne-noden til å peke på noden
+         * som har indeks lik parameterverdien som sendes inn.
+         * @param indeks - verdi som avgjør hvilken node som skal pekes på
+         */
+
         private DobbeltLenketListeIterator(int indeks) {
             Node<T> nodePaaIndeks = finnNode(indeks);
             denne = nodePaaIndeks;
@@ -477,7 +506,6 @@ public class DobbeltLenketListe<T> implements Liste<T> {
             iteratorendringer = endringer;  // teller endringer
         }
 
-        // NB!! Denne koden skal ikke endres
         @Override
         public boolean hasNext() {
             if (denne != null) {
@@ -538,7 +566,19 @@ public class DobbeltLenketListe<T> implements Liste<T> {
     } // class DobbeltLenketListeIterator
 
 
-    // Oppgave 10: ikke bruk hjelpestrukturer
+    /**
+     * Oppgave 10
+     *
+     * Metoden henter antall fra liste. Den kjører
+     * gjennom med dobbel for-løkke og sjekker
+     * hvert element mot hverandre. Dersom
+     * elementet til venstre er større enn det til høyre,
+     * benyttes liste.oppdater().
+     * @param liste - generisk liste av interfacet Liste.
+     * @param c -instans av Comparator-interfacet
+     * @param <T> - generisk parameter
+     */
+
     public static <T> void sorter(Liste<T> liste, Comparator<? super T> c) {
         int antall = liste.antall();
         for (int i = 0; i < antall; i++) {
@@ -546,10 +586,9 @@ public class DobbeltLenketListe<T> implements Liste<T> {
                 T elementLeft = liste.hent(i);
                 T elementRight = liste.hent(j);
                 if (c.compare(elementLeft, elementRight) > 0) {
-                   liste.oppdater(i, elementRight);
-                   liste.oppdater(j, elementLeft);
+                    liste.oppdater(i, elementRight);
+                    liste.oppdater(j, elementLeft);
                 }
-
             }
         }
     }
