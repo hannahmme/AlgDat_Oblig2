@@ -327,8 +327,8 @@ public class DobbeltLenketListe<T> implements Liste<T> {
         Node<T> node = hode;
 
         do {
-            if (node.verdi.equals(verdi)) {    // hvis den finner verdien i listen
-                break;      // går ut av loopen, aktuell node er funnet
+            if (node.verdi.equals(verdi))  {    // hvis den finner verdien i listen
+                break;                          // går ut av loopen, aktuell node er funnet
             }
             node = node.neste;
         } while (node != null);
@@ -355,7 +355,10 @@ public class DobbeltLenketListe<T> implements Liste<T> {
         else if (node == hode) {
             hode = hode.neste;
             hode.forrige = null;
-        } else {
+        }
+
+        // hvis verdien er i midten av listen
+        else {
             node.forrige.neste = node.neste;      // den forrige sin neste peker på den neste
             node.neste.forrige = node.forrige;    // den neste sin forrige er denne sin forrige
         }
@@ -550,7 +553,7 @@ public class DobbeltLenketListe<T> implements Liste<T> {
         for(current = list.hode; current.neste != null; current = current.neste){
             for(currentSinNeste = current.neste; currentSinNeste != null; currentSinNeste = currentSinNeste.neste){
 
-                if(c.compare(current.verdi, currentSinNeste.verdi) == 1){
+                if(c.compare(current.verdi, currentSinNeste.verdi) > 0){
                     temp = current.verdi;
                     current.verdi = currentSinNeste.verdi;
                     currentSinNeste.verdi = temp;
