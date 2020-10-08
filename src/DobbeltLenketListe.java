@@ -326,8 +326,8 @@ public class DobbeltLenketListe<T> implements Liste<T> {
         // noden som skal fjernes
         Node<T> node = hode;
 
-         while (node != null){
-            if (node.verdi.equals(verdi))  {    // hvis den finner verdien i listen
+        while (node != null) {
+            if (node.verdi.equals(verdi)) {    // hvis den finner verdien i listen
                 break;                          // går ut av loopen, aktuell node er funnet
             }
             node = node.neste;
@@ -487,11 +487,11 @@ public class DobbeltLenketListe<T> implements Liste<T> {
         }
 
 
-// Oppgave 9 Amalie
+        // Oppgave 9 Amalie
         @Override
         public void remove() {
 
-            if(!fjernOK){
+            if (!fjernOK) {
                 throw new IllegalStateException("Kan ikke fjerne noden!");
             }
 
@@ -512,13 +512,13 @@ public class DobbeltLenketListe<T> implements Liste<T> {
 
 
             //siste skal fjernes. Måtte ha denne først, ellers var det false?
-            else if(denne == null){
+            else if (denne == null) {
                 hale = hale.forrige;
                 hale.neste = null;
             }
 
             // hvis første skal fjernes
-            else if(denne.forrige == hode){ // hvis forrige er hode/ første skal fjernes
+            else if (denne.forrige == hode) { // hvis forrige er hode/ første skal fjernes
                 hode = denne;
                 hode.forrige = null;
             }
