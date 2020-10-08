@@ -326,12 +326,12 @@ public class DobbeltLenketListe<T> implements Liste<T> {
         // noden som skal fjernes
         Node<T> node = hode;
 
-        do {
+         while (node != null){
             if (node.verdi.equals(verdi))  {    // hvis den finner verdien i listen
                 break;                          // går ut av loopen, aktuell node er funnet
             }
             node = node.neste;
-        } while (node != null);
+        }
 
 
         // fant ikke verdien, returnerer false
