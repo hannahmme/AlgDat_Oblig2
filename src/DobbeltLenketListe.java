@@ -1,7 +1,5 @@
 import java.util.*;
 
-//hentet fra tilleggsklasser som fulgte med oppgaven 
-
 public class DobbeltLenketListe<T> implements Liste<T> {
 
     /**
@@ -38,18 +36,17 @@ public class DobbeltLenketListe<T> implements Liste<T> {
     }
 
 
+    // Oppgave 1
     /**
-     * Oppgave 1
      * @return - returnerer antallet verdier i listen
      */
-
     @Override
     public int antall() {
         return this.antall;
     }
 
+    // Oppgave 1
     /**
-     * Oppgave 1
      * @return - returnerer true dersom listen er tom, false ellers
      */
     @Override
@@ -60,9 +57,8 @@ public class DobbeltLenketListe<T> implements Liste<T> {
         return false;
     }
 
-
+    // Oppgave 1
     /**
-     * Oppgave 1
      * Konstruktoer som oppretter en dobbelt lenket liste med noder.
      * Bruker Objects sin .requireNonNull() for aa sjekke om tabellen er null.
      * Current brukes som en teller, som starter paa plass hode
@@ -103,6 +99,8 @@ public class DobbeltLenketListe<T> implements Liste<T> {
         hale = current;
     }
 
+
+    // Oppgave 2
     // Oppgave 2a
     @Override
     public String toString() {
@@ -151,7 +149,6 @@ public class DobbeltLenketListe<T> implements Liste<T> {
         return omvendtListeString.toString(); //bruker StringBuilder sin toString()-metode for aa gjoere om listeString til en tekststreng
     }
 
-
     // Oppgave 2b
     @Override
     public boolean leggInn(T verdi) {
@@ -171,7 +168,8 @@ public class DobbeltLenketListe<T> implements Liste<T> {
     }
 
 
-    // Oppgave 3a Amalie
+    // Oppgave 3
+    // Oppgave 3a
     private Node<T> finnNode(int indeks) {
         int halvpart = antall / 2;
 
@@ -224,7 +222,7 @@ public class DobbeltLenketListe<T> implements Liste<T> {
         }
     }
 
-    // OK. hentet fra kompendiet, delkapittel 1.2.3
+    // Hentet fra kompendiet, delkapittel 1.2.3
     private static void fratilKontroll(int antall, int fra, int til) {
         if (fra < 0)                                  // fra er negativ
             throw new IndexOutOfBoundsException("fra(" + fra + ") er negativ!");
@@ -236,8 +234,7 @@ public class DobbeltLenketListe<T> implements Liste<T> {
             throw new IllegalArgumentException("fra(" + fra + ") > til(" + til + ") - illegalt intervall!");
     }
 
-
-    // Oppgave 3b: skal returnere en liste som inneholder verdiene i intervallet
+    // Oppgave 3b
     public Liste<T> subliste(int fra, int til) { //fra=hode og til=hale
         fratilKontroll(antall, fra, til);
         DobbeltLenketListe<T> subliste = new DobbeltLenketListe<>();
@@ -250,9 +247,8 @@ public class DobbeltLenketListe<T> implements Liste<T> {
     }
 
 
+    // Oppgave 4
     /**
-     * Oppgave 4
-     *
      * Metoden sjekker om verdi ligger i listen.
      * Current brukes som teller, hvor den starter paa hode-noden
      * og oeker med current.neste for hver iterasjon.
@@ -262,7 +258,6 @@ public class DobbeltLenketListe<T> implements Liste<T> {
      * @return - returnerer indeks til verdien om den ligger i listen,
      * ellers -1 om verdi er null eller ikke finnes.
      */
-
     @Override
     public int indeksTil(T verdi) {
         Node<T> current = this.hode;
@@ -277,9 +272,8 @@ public class DobbeltLenketListe<T> implements Liste<T> {
         return -1;
     }
 
+    // Oppgave 4
     /**
-     * Oppgave 4
-     *
      * Metoden sjekker om en verdi finnes i listen.
      * Benytter metoden indeksTil().
      *
@@ -295,7 +289,8 @@ public class DobbeltLenketListe<T> implements Liste<T> {
         return false;
     }
 
-    //Oppgave 5
+
+    // Oppgave 5
     @Override
     public void leggInn(int indeks, T verdi) {
         Objects.requireNonNull(verdi); //Kaster et unntak dersom verdi er null
@@ -326,7 +321,7 @@ public class DobbeltLenketListe<T> implements Liste<T> {
     }
 
 
-    // Oppgave 6 Amalie
+    // Oppgave 6
     @Override
     public boolean fjern(T verdi) {
 
@@ -343,7 +338,6 @@ public class DobbeltLenketListe<T> implements Liste<T> {
             }
             node = node.neste;
         }
-
 
         // fant ikke verdien, returnerer false
         if (node == null) { // hvis noden er null har man altsaa ikke funnet den i listen
@@ -412,8 +406,8 @@ public class DobbeltLenketListe<T> implements Liste<T> {
     }
 
 
+    //Oppgave 7
     /**
-     * Oppgave 7
      * Metode som nullstiller dobbeltlenkede listen med noder.
      * Den bruker to hjelpevariabler, en som en teller og den andre
      * som en midltertidig lagringsplass saa vi ikke mister current.neste.
@@ -437,8 +431,10 @@ public class DobbeltLenketListe<T> implements Liste<T> {
         endringer++;
     }
 
+
+    // Oppgave 8
+    // Oppgave 8b
     /**
-     * Oppgave 8b
      * @return - returnerer en instans av iteratorklassen "DobbeltLenketListeIterator()".
      */
 
@@ -447,8 +443,8 @@ public class DobbeltLenketListe<T> implements Liste<T> {
         return new DobbeltLenketListeIterator();
     }
 
+    //Oppgave 8d
     /**
-     * Oppgave 8d
      * @param indeks - skal sjekkes om er lovlig
      * @return - returnerer instans av iteratorklassen "DobbeltLenketListeIterator()".
      */
@@ -469,8 +465,8 @@ public class DobbeltLenketListe<T> implements Liste<T> {
             iteratorendringer = endringer;  // teller endringer
         }
 
+        // Oppgave 8a
         /**
-         * Oppgave 8a
          * Metoden sjekker om det er noen neste-verdi.
          * Er den tom, kastes NoSuchElementException.
          * @return - "denne" returneres
@@ -491,9 +487,8 @@ public class DobbeltLenketListe<T> implements Liste<T> {
             return verdi;
         }
 
+        // Oppgave 8c
         /**
-         * Oppgave 8c
-         *
          * Metoden skal sette denne-noden til aa peke paa noden
          * som har indeks lik parameterverdien som sendes inn.
          * @param indeks - verdi som avgjoer hvilken node som skal pekes paa
@@ -514,8 +509,8 @@ public class DobbeltLenketListe<T> implements Liste<T> {
             return false;
         }
 
-
-        // Oppgave 9 Amalie
+        
+        // Oppgave 9
         @Override
         public void remove() {
 
@@ -537,7 +532,6 @@ public class DobbeltLenketListe<T> implements Liste<T> {
                 hode = null;
                 hale = null;
             }
-
 
             //siste skal fjernes. Maatte ha denne foerst, ellers var det false?
             else if (denne == null) {
@@ -562,13 +556,11 @@ public class DobbeltLenketListe<T> implements Liste<T> {
             iteratorendringer++;
             endringer++;
         }
-
     } // class DobbeltLenketListeIterator
 
 
+    // Oppgave 10
     /**
-     * Oppgave 10
-     *
      * Metoden henter antall fra liste. Den kjoerer
      * gjennom med dobbel for-loekke og sjekker
      * hvert element mot hverandre. Dersom
@@ -592,7 +584,4 @@ public class DobbeltLenketListe<T> implements Liste<T> {
             }
         }
     }
-}
-
-
-    // class DobbeltLenketListe
+} // class DobbeltLenketListe
