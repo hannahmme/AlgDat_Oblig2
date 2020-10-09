@@ -7,7 +7,7 @@ Denne oppgaven er en innlevering i Algoritmer og Datastrukturer. Oppgaven er lev
 * Hannah Marie Maurstad Eriksen, S325340, s325340@oslomet.no
 
 Vi har brukt git til å dokumentere arbeidet vårt.
-Vi har 77 commits totalt, og hver logg-melding beskriver det vi har gjort av endringer.
+Vi har 80 commits totalt, og hver logg-melding beskriver det vi har gjort av endringer.
 
 I oppgaven har vi hatt følgende arbeidsfordeling:
 
@@ -47,6 +47,7 @@ Vi har i fellesskap løst oppgave 10.
              Her kan listen være tom, bestå av én node (hode = hale og må nullstilles) siste eller første skal slettes,
              eller en node i midten av listen skal slettes. Samme kode er brukt på begge metodene, abre at det i fjern(T)
              er lagt inn en ekstra for-løkke for å finne noden som skal slettes.
+             Koden feiler noen ganger på effektivitet, men den går uten feil de fleste ganger.
              
 * Oppgave 7: Løste nullstill() ved å bruke en hjelpevariabel som teller. Brukte en while-løkke som kjører så lenge teller ikke lik hale. 
              For hver iterasjon settes telleren sin verdi og forrige-peker til null. Før den setter neste-pekeren til null, 
